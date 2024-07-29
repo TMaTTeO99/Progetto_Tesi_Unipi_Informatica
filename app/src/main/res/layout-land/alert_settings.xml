@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.example.GreenApp.Alert.AlertActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <!--<ImageView
+        android:id="@+id/imagePh2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/phmin"
+        app:layout_constraintEnd_toStartOf="@+id/imageConducibility2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/phmax"
+        app:layout_constraintTop_toBottomOf="@+id/phmax"
+        app:srcCompat="@drawable/phprova" />-->
+
+    <TextView
+        android:id="@+id/textViewirra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageUminidy"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageIrradiance"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <TextView
+        android:id="@+id/textViewPes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPeso"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <TextView
+        android:id="@+id/textViewcond"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="8dp"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageConducibility"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.263" />
+
+    <TextView
+        android:id="@+id/textViewPh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imagePh"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/textViewUmid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="--.--"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageUminidy"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <ImageView
+        android:id="@+id/imagePh"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageConducibility"
+        app:layout_constraintVertical_bias="0.241"
+        app:srcCompat="@drawable/phprova" />
+
+    <ImageView
+        android:id="@+id/imageTemperature"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="temperature"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageIrradiance"
+        app:layout_constraintVertical_bias="0.212"
+        app:srcCompat="@drawable/temp" />
+
+    <!--<ImageView
+        android:id="@+id/imageTemperature2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="temperature"
+        app:layout_constraintBottom_toTopOf="@+id/Tempmin"
+        app:layout_constraintEnd_toStartOf="@+id/imageUminidy2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/irramax"
+        app:layout_constraintTop_toBottomOf="@+id/tempmax"
+        app:srcCompat="@drawable/temp" />-->
+
+    <ImageView
+        android:id="@+id/imageIrradiance"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/irradiance"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <!--<ImageView
+        android:id="@+id/imageIrradiance2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/irradiance"
+        app:layout_constraintBottom_toTopOf="@+id/irramin"
+        app:layout_constraintEnd_toStartOf="@+id/imageTemperature2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/irramax" />
+-->
+    <ImageView
+        android:id="@+id/imageConducibility"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageUminidy"
+        app:layout_constraintVertical_bias="0.212"
+        app:srcCompat="@drawable/conducibililta" />
+
+
+    <!--<ImageView
+        android:id="@+id/imageConducibility2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/condmin"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/condmax"
+        app:layout_constraintTop_toBottomOf="@+id/condmax"
+
+        app:srcCompat="@drawable/cond" />-->
+
+    <ImageView
+        android:id="@+id/imageUminidy"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043"
+        app:srcCompat="@drawable/umidity" />
+
+
+    <!--<ImageView
+        android:id="@+id/imageUminidy2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintBottom_toTopOf="@+id/umidmin"
+        app:layout_constraintEnd_toStartOf="@+id/imagePh2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/umidmax"
+        app:layout_constraintTop_toBottomOf="@+id/umidmax"
+
+        app:srcCompat="@drawable/umidity" />-->
+
+    <ImageView
+        android:id="@+id/imageViewPeso"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.001"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageTemperature"
+        app:layout_constraintVertical_bias="0.233"
+        app:srcCompat="@drawable/evapotraspirazione" />
+
+    <ImageView
+        android:id="@+id/imageViewSoil"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPeso"
+        app:layout_constraintVertical_bias="0.348"
+        app:srcCompat="@drawable/umidita_terreno" />
+
+    <ImageView
+        android:id="@+id/imagePeso2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.622"
+        app:srcCompat="@drawable/scale" />
+
+    <TextView
+        android:id="@+id/textViewPeso1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagePeso2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.627" />
+
+    <ImageView
+        android:id="@+id/imagevento"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.766"
+        app:srcCompat="@drawable/wind" />
+
+    <TextView
+        android:id="@+id/textViewvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagevento"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.752" />
+
+    <TextView
+        android:id="@+id/textViewSoil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.001"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSoil"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.641" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="119dp"
+        android:layout_height="44dp"
+        android:onClick="resetButton"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.135"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <!--<TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Min"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.363"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634" />
+
+    <EditText
+        android:id="@+id/Tempmin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/irramin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/irramin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/phmax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/umidmax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/Edittempomax"
+        android:layout_width="45dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="minuti"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/soilmax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/pesomin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/condmin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/soilmin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/pesomin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/soilmax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/pesomin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <ImageView
+        android:id="@+id/imageViewSoil2"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/soilmin"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewclessidra"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/soilmax"
+        app:layout_constraintTop_toBottomOf="@+id/soilmax"
+        app:srcCompat="@drawable/suolo" />
+
+    <EditText
+        android:id="@+id/umidmax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tempmax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/phmin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/umidmin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/condmin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toEndOf="@+id/phmin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/pesomax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/condmax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/condmax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toEndOf="@+id/phmax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/umidmin"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/Tempmin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.656" />
+
+    <EditText
+        android:id="@+id/irramax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <EditText
+        android:id="@+id/tempmax"
+        android:layout_width="44dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="-"
+        android:inputType="numberSigned|number|numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/irramax"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.279" />-->
+
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="11"
+        android:rowCount="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="Max"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/tempmax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="1"
+            android:text="°C"
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageTemperature2"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:contentDescription="temperature"
+            app:srcCompat="@drawable/temp" />
+
+        <EditText
+            android:id="@+id/Tempmin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/umidmax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_gravity="center"
+            android:text=" %"
+            android:textSize="20dp" />
+        <ImageView
+            android:id="@+id/imageUminidy2"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="3"
+            android:layout_column="2"
+            app:srcCompat="@drawable/umidity" />
+
+        <EditText
+            android:id="@+id/umidmin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/phmax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imagePh_2"
+            android:layout_width="35dp"
+            android:layout_height="33dp"
+            android:layout_row="3"
+            android:layout_column="3"
+            app:srcCompat="@drawable/phprova" />
+
+        <EditText
+            android:id="@+id/phmin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+
+        <EditText
+            android:id="@+id/condmax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="4"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="4"
+            android:layout_gravity="center"
+            android:text="dS·m⁻¹"
+            android:textSize="15dp" />
+        <ImageView
+            android:id="@+id/imageConducibility_2"
+            android:layout_width="33dp"
+            android:layout_height="32dp"
+            android:layout_row="3"
+            android:layout_column="4"
+            app:srcCompat="@drawable/conducibililta" />
+
+        <EditText
+            android:id="@+id/condmin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="4"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/irramax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="5"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="5"
+            android:text="W·n⁻²"
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageIrradiance_2"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_row="3"
+            android:layout_column="5"
+            android:background="@drawable/irradiance" />
+
+        <EditText
+            android:id="@+id/irramin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="5"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+
+        <EditText
+            android:id="@+id/pesomax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="6"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="6"
+            android:text="g / %"
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageViewPeso_2"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_row="3"
+            android:layout_column="6"
+            app:srcCompat="@drawable/evapotraspirazione" />
+
+        <EditText
+            android:id="@+id/pesomin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="6"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/soilmax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="7"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="7"
+            android:text=" %"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageViewSoil_2"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_row="3"
+            android:layout_column="7"
+            app:srcCompat="@drawable/umidita_terreno" />
+
+        <EditText
+            android:id="@+id/soilmin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="7"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/pesoPiantamax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="8"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="8"
+            android:text=" g"
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageViewpesopianta"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_row="3"
+            android:layout_column="8"
+            app:srcCompat="@drawable/scale" />
+
+        <EditText
+            android:id="@+id/pesoPiantamin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="8"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/ventoMin"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:layout_column="9"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_row="2"
+            android:layout_column="9"
+            android:text="KM·h⁻¹"
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:id="@+id/imageViewVento"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_row="3"
+            android:layout_column="9"
+            app:srcCompat="@drawable/wind" />
+
+        <EditText
+            android:id="@+id/ventomax"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="4"
+            android:layout_column="9"
+            android:hint="--"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/Edittempomax"
+            android:layout_width="67dp"
+            android:layout_height="37dp"
+            android:layout_row="1"
+            android:ems="10"
+            android:hint="minuti"
+            android:inputType="numberSigned|number|numberDecimal"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imageViewclessidra"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_row="3"
+            android:layout_column="10"
+            app:srcCompat="@drawable/clessidra" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:text="Min"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.387"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grid" />
+
+    </GridLayout>
+
+
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="119dp"
+        android:layout_height="44dp"
+        android:onClick="saveButton"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.988" />
+
+    <TextView
+        android:id="@+id/textViewtemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="--.--"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageConducibility"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageTemperature"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.263" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="125dp"
+        android:layout_height="28dp"
+        android:text="NOTIFICHE"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042" />
+
+    <!--<ImageView
+        android:id="@+id/imageViewclessidra"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Edittempomax"
+        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSoil2"
+        app:layout_constraintTop_toBottomOf="@+id/Edittempomax"
+        app:layout_constraintVertical_bias="0.116"
+        app:srcCompat="@drawable/clessidra" />-->
+
+    <!--<ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toTopOf="@+id/pesomin"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSoil2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/pesomax"
+        app:layout_constraintTop_toBottomOf="@+id/pesomax"
+
+        app:srcCompat="@drawable/evapotraspirazione" />-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="124dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="192dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

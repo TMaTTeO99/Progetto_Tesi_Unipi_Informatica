@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/sfondo"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:id="@+id/headerPrevisione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/labelTitlePrevisione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:text="@string/previsione_label"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+    </GridLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutPrevisione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerPrevisione"
+        >
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/Graph_NewType"
+            android:layout_width="420dp"
+            android:layout_height="170dp"
+
+             />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/startDateIdPreditction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="150dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutPrevisione"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/endDateIdPreditction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="352dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutPrevisione" />
+
+    <!--
+    <GridLayout
+        android:id="@+id/TextViewExplanation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/headerPrevisione"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TextPrevisone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="PREVISIONE"
+            android:textColor="@color/predictionColor"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextTracking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="TRACKING"
+            android:textColor="@color/trackingColor"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/TextObservations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="OSSERVAZIONI"
+            android:textColor="@color/observationsColor"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+    </GridLayout>-->
+    <GridLayout
+        android:id="@+id/GridController"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:columnCount="1"
+        android:rowCount="2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/linearLayoutPrevisione"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <GridLayout
+            android:id="@+id/GridSeekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:columnCount="3"
+            android:rowCount="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TextViewExplanation">
+
+
+            <SeekBar
+                android:id="@+id/SliderTemperature"
+                android:layout_width="match_parent"
+                android:layout_row="0"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:maxWidth="120dp"
+                android:minWidth="120dp"></SeekBar>
+
+            <TextView
+                android:id="@+id/TextTemperature"
+                android:layout_row="0"
+                android:layout_column="1"
+
+                android:layout_gravity="center"
+                android:text="temperatura" />
+            <ImageView
+                android:id="@+id/imageTemperature2"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:contentDescription="temperature"
+                app:srcCompat="@drawable/temp" />
+
+            <SeekBar
+                android:id="@+id/SliderIrradiation"
+                android:layout_width="match_parent"
+                android:layout_row="1"
+                android:layout_rowWeight="1"
+                android:layout_column="0"
+                android:layout_marginTop="10dp"
+                android:maxWidth="120dp"
+                android:minWidth="120dp"></SeekBar>
+
+            <TextView
+                android:id="@+id/textIrradiation"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_gravity="center"
+                android:text="irradiazione" />
+            <ImageView
+                android:id="@+id/imageIrradiance"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:background="@drawable/irradiance"
+                />
+        </GridLayout>
+
+        <Button
+            android:id="@+id/ButtonControlledPrediction"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_row="1"
+            android:elevation="2dp"
+            android:layout_column="0"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/toolbar_style"
+            android:text="plot"
+            android:textColor="@color/button_newpoint_color"/>
+    </GridLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/toolbar_style"
+        android:elevation="2dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:itemIconSize="25dp"
+        app:itemIconTint="@color/selected_color_toolbar"
+        app:itemTextColor="@color/selected_color_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/toolbar_menu" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

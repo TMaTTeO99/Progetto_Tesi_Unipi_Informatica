@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:visible="false"/>
+    <item
+        android:id="@+id/navigation_prediction"
+        android:icon="@drawable/predictive"
+        android:title="@string/prediction"
+        />
+    <item
+        android:id="@+id/navigation_date"
+        android:icon="@drawable/clessidra"
+        android:title="@string/data"
+        />
+    <item
+        android:id="@+id/navigation_controllerPrediction"
+        android:icon="@drawable/controller"
+        android:title="@string/controlledPrediction"
+        />
+
+</menu>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+
+    <color name="predictionColor">#032a85</color>
+    <color name="trackingColor">#FF000000</color>
+    <color name="observationsColor">#d1db00</color>
+
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#f8f8ff</color>
+    <color name="trasparent">#00000000</color>
+    <color name="black">#FF000000</color>
+    <color name="orange">#ffa500</color>
+
+</resources>

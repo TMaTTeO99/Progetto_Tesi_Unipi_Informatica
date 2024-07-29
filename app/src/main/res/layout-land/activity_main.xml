@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sfondo"
+    style="@android:style/TextAppearance.DeviceDefault.Medium"
+    tools:context="com.example.GreenApp.MainActivity"
+    tools:layout_editor_absoluteY="73dp">
+
+
+    <ImageView
+        android:id="@+id/imageWind"
+        android:layout_width="35dp"
+        android:layout_height="38dp"
+        android:onClick="windSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536"
+        app:srcCompat="@drawable/wind" />
+
+    <TextView
+
+        android:id="@+id/Textvento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toEndOf="@+id/TextPesoPianta"
+        app:layout_constraintTop_toBottomOf="@+id/imageWind" />
+
+    <ImageView
+        android:id="@+id/imageScale"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:onClick="scaleSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.689"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.539"
+        app:srcCompat="@drawable/scale" />
+
+    <TextView
+
+        android:id="@+id/TextPesoPianta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="4dp"
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.673"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageScale" />
+
+    <TextView
+        android:id="@+id/textPh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autoSizeTextType="uniform"
+
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.022"
+        app:layout_constraintStart_toStartOf="@+id/imagePh"
+        app:layout_constraintTop_toBottomOf="@+id/imagePh" />
+
+    <TextView
+        android:id="@+id/textUmidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+
+
+        android:layout_marginTop="5dp"
+        android:autoSizeTextType="uniform"
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="@+id/imageUminidy"
+        app:layout_constraintTop_toBottomOf="@+id/imageUminidy" />
+
+    <TextView
+        android:id="@+id/textConducibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autoSizeTextType="uniform"
+
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toEndOf="@+id/textSoil"
+        app:layout_constraintTop_toBottomOf="@+id/imageConducibility" />
+
+    <TextView
+        android:id="@+id/textTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autoSizeTextType="uniform"
+
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTemperature" />
+
+    <TextView
+        android:id="@+id/textSoil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageSoil" />
+
+    <ImageView
+        android:id="@+id/imageSoil"
+        android:layout_width="38dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="soil"
+        android:onClick="soilSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.689"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.202"
+        app:srcCompat="@drawable/umidita_terreno" />
+
+    <ImageView
+        android:id="@+id/imageTemperature"
+        android:layout_width="38dp"
+        android:layout_height="39dp"
+        android:contentDescription="temperature"
+        android:onClick="tempSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559"
+        app:srcCompat="@drawable/temp" />
+
+    <ImageView
+        android:id="@+id/imagePianta"
+        android:layout_width="49dp"
+        android:layout_height="58dp"
+        android:layout_below="@+id/textViewON"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:onClick="irrigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.362"
+        app:srcCompat="@drawable/innaffia" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="10sp"
+        android:text="MENU IRRIGAZIONE"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagePianta">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="519dp"
+        android:layout_height="17dp"
+        android:text="ultimo aggiornamento :"
+        android:textSize="14sp"
+        android:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.996" />
+
+
+    <!--<ImageButton
+        android:id="@+id/imageView"
+        android:layout_width="49dp"
+        android:layout_height="46dp"
+        android:background="@drawable/ic_graphic"
+        android:onClick="doAdd"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.059" />-->
+
+    <!--<ImageButton
+        android:id="@+id/imagePrediction"
+        android:layout_width="52dp"
+        android:layout_height="54dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="50px"
+        android:background="@drawable/prediction_ia"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--<ImageButton
+        android:id="@+id/imageButton8"
+        android:layout_width="47dp"
+        android:layout_height="46dp"
+        android:background="@drawable/ic_setting"
+        android:onClick="settingChannel"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.059" />-->
+
+    <ImageView
+        android:id="@+id/imagePh"
+        android:layout_width="35dp"
+        android:layout_height="38dp"
+        android:onClick="phSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.193"
+        app:srcCompat="@drawable/phprova" />
+
+    <ImageView
+        android:id="@+id/imageIrradiance"
+        android:layout_width="38dp"
+        android:layout_height="36dp"
+        android:onClick="irraSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.192"
+        app:srcCompat="@drawable/irradiance" />
+
+    <!--<ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:onClick="refresh"
+        app:layout_constraintBottom_toTopOf="@+id/textView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/refresh" />-->
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp"
+        android:text="MENU ALLARME"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textView1"
+        app:layout_constraintEnd_toStartOf="@+id/imageView8" />-->
+
+    <!--<ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="33dp"
+        android:layout_height="27dp"
+        android:onClick="notifiche"
+        app:layout_constraintBottom_toTopOf="@+id/textView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.986"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/attenzione" />-->
+
+    <TextView
+        android:id="@+id/textIrradiance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:autoSizeTextType="uniform"
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageIrradiance"
+        app:srcCompat="@drawable/irradiance" />
+
+    <ImageView
+        android:id="@+id/imageConducibility"
+        android:layout_width="37dp"
+        android:layout_height="36dp"
+        android:onClick="condSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:srcCompat="@drawable/conducibililta" />
+
+    <ImageView
+        android:id="@+id/imageUminidy"
+        android:layout_width="38dp"
+        android:layout_height="36dp"
+        android:onClick="umidSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.362"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.549"
+        app:srcCompat="@drawable/umidity" />
+
+    <TextView
+        android:id="@+id/textEvap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:autoSizeTextType="uniform"
+
+        android:text="- -"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:autoSizeTextType="uniform"
+        android:text="STATUS"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <TextView
+        android:id="@+id/textViewON"
+        android:layout_width="114dp"
+        android:layout_height="34dp"
+        android:layout_below="@+id/textViewStatus"
+        android:layout_centerHorizontal="true"
+        android:autoSizeTextType="uniform"
+        android:text="OFFLINE"
+        android:textColor="#E4F50404"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="33dp"
+        android:layout_height="38dp"
+        android:onClick="pesoSettings"
+        app:layout_constraintBottom_toBottomOf="@+id/textView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.546"
+        app:srcCompat="@drawable/evapotraspirazione" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+        android:id="@+id/bottom_navigation_main"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/toolbar_style"
+        android:elevation="2dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:itemIconSize="25dp"
+        app:itemIconTint="@color/selected_color_toolbar"
+        app:itemTextColor="@color/selected_color_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/textView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/toolbar_main"
+        app:labelVisibilityMode="labeled"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

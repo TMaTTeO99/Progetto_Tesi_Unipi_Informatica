@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.firstapp"
+    >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <activity
+            android:name="com.example.GreenApp.Prediction.Prediction_activity"
+
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name="com.example.GreenApp.Graphic.MainActivity"
+            android:hardwareAccelerated="true"
+            android:label="@string/title_activity_graphic"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.GreenApp.Channel.ChannelActivity"
+            android:label="ChannelActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.GreenApp.Alert.AlertActivity"
+            android:label="AlertActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.GreenApp.Irrigation.IrrigationActivity"
+            android:label="IrrigationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.GreenApp.Channel.Channelinsert"
+            android:label="Channelinsert"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!--
+            hO aGGIUNTO android:theme="@style/AppTheme.NoActionBar" DA CHIEDERE AL PROF SE VA BENE
+        -->
+        <activity
+            android:name="com.example.GreenApp.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.example.GreenApp.Alert.ForegroundService" />
+
+        <receiver
+            android:name="com.example.GreenApp.Alert.StartActivityOnBootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
