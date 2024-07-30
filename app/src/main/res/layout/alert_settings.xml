@@ -444,8 +444,8 @@
                 />
             <TextView
                 android:layout_row="4"
+                android:text="W·m⁻²"
                 android:layout_column="2"
-                android:text="W·n⁻²"
                 android:textSize="15dp"
                 android:layout_gravity="top"
                 />
@@ -595,8 +595,8 @@
                 android:layout_gravity="end"/>
             <TextView
                 android:layout_row="8"
-                android:layout_column="2"
                 android:text="km·h⁻¹"
+                android:layout_column="2"
                 android:textSize="15dp"
                 android:layout_gravity="top"
                 />
@@ -638,8 +638,8 @@
                 android:id="@+id/button3"
                 android:layout_width="119dp"
                 android:layout_height="44dp"
-                android:onClick="saveButton"
-                android:text="Save"
+                android:text="Reset"
+                android:onClick="resetButton"
                 android:layout_row="10"
                 android:layout_column="0"/>
 
@@ -647,8 +647,9 @@
                 android:id="@+id/button"
                 android:layout_width="119dp"
                 android:layout_height="44dp"
-                android:onClick="resetButton"
-                android:text="Reset"
+
+                android:text="Save"
+                android:onClick="saveButton"
                 android:layout_row="10"
                 android:layout_column="2"
                 android:layout_gravity="end"/>

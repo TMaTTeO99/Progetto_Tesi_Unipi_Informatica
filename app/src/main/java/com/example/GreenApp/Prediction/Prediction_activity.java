@@ -152,7 +152,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     int scale = 1000;//variabile di scala fra int e double per le seekbar
 
     private boolean flagPredictionDone = false; //flag per essere sicuro di aver previsto un dato del futuro
-                                                //quando uso il controller
+    //quando uso il controller
     private boolean flagControllerActive = false;//flag per controllare
 
     @Override
@@ -548,8 +548,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 if(!isCompletedRange(dataFromDbChoice, startDateSelected, endDataSelected))retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
                 else {
 
-                    //devo controllare se la data finale scelta dall'utente è maggiore rispetto alla fine dei dati cho ho gia
-                    int diff = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(endDataSelected));
+                    buildDataFromDatabase(0);
+
+                    /*int diff = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(endDataSelected));
                     if(diff > 0){
                         buildDataFromDatabase(1);
                     }
@@ -557,7 +558,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                     else {
                         hideLoading();
                         ShowAlert("ERRORE -0000", "Ipossibile Effettiare Predizione", true, activity, null, null);
-                    }
+                    }*/
                 }
 
             }
@@ -565,11 +566,39 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 //caso in cui ho i dati sulla data di inizio ma non quella di fine
                 if(startDataFlag && !endDataFLag){
 
-                    if(!isCompletedRange(dataFromDbChoice, startDateSelected, endDataSelected))retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
-                    else{
 
-                        flagPositionDataDB = 1;//segnalo che i dati nuovi vanno inseriti alla fine
-                        buildDataFromDatabase(1);
+                    if(!isCompletedRange(dataFromDbChoice, startDateSelected, endDataSelected))retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
+                    else {
+
+
+                        //devo controllare se la data finale scelta dall'utente è maggiore rispetto alla fine dei dati cho ho gia
+                        //quindi rispetto alla data di ieri
+                        int diff = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(endDataSelected));
+
+                        //recupero la differenza di giorni fra gli ultimi dati che ho e ieri
+                        int diffFromYesterday = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(yesterday));
+
+                        //se la data che l'utente ha scelto rispetto ai dati che ho gia è maggiore
+                        if(diff > 0){
+
+                            //controlla se gli utlimi dati che ho sono di ieri o di giorni precedenti
+
+
+                            if(diffFromYesterday == 0)buildDataFromDatabase(0);//se sono di ieri, effettuo la predizione
+                            else {
+
+                                flagPositionDataDB = 1;//segnalo che i dati nuovi vanno inseriti alla fine
+                                buildDataFromDatabase(1);//altrimenti recupero i dati mancanti
+                            }
+                        }
+                        else {
+                            hideLoading();
+                            ShowAlert("ERRORE -0000", "Ipossibile Effettiare Predizione", true, activity, null, null);
+                        }
+
+
+
+
                     }
 
                 }
@@ -583,7 +612,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 }
                 else if(!startDataFlag && !endDataFLag){
 
-                    //caso che non dovrebbe capitare mai, per sicurezza recupero tutti i dati.
+                    //caso in cui utente inserisce data precedente e successiva ai dati che ho
+                    //per non effettuare troppe chiamate al server per recuperare i dati
+                    //ricreo i dati dall'inizio
                     retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
                 }
             }
@@ -726,7 +757,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                                 //controllo se temperatura e irradizaione esistono nel canale
                                 boolean tempExist = CheckExistField(myDataStructName.get(ID_1), myDataStructName.get(ID_2), "temperature");
                                 boolean irraExist = CheckExistField(myDataStructName.get(ID_1), myDataStructName.get(ID_2), "irradiance");
-                                
+
 
                                 if(tempExist && irraExist)handleFlow();
                                 else {
@@ -1069,13 +1100,13 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 if(daysAhead == -1)daysAhead = dateData.size() - 1;
             }
             //else daysAhead -= 1; //devo sottrarre 1 perche devo predire un giorno che è
-                                 //presente fra i miei dati quindi mi fermo il giorno prima
+            //presente fra i miei dati quindi mi fermo il giorno prima
 
             /*
-            * Qui controllo se il range selezionato dall'utente contiene almeno
-            * 3 misurazioni per poter effettuare le predizioni
-            *
-            * */
+             * Qui controllo se il range selezionato dall'utente contiene almeno
+             * 3 misurazioni per poter effettuare le predizioni
+             *
+             * */
 
             Matrix Y = fieldMeans.get("Previsione");//recupero i dati delle misurazioni
 
@@ -1212,7 +1243,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 Object [] res = null;
 
                 res = buildDataMatrix(new ArrayList<>(
-                        Arrays.asList("temperature", "irradiance"))
+                                Arrays.asList("temperature", "irradiance"))
                         , Objects.requireNonNull(myDataStructDataReal.get(retreiveIdFromField("temperature", myDataStructName))));
 
 
@@ -1303,7 +1334,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 }*/
 
                 res = buildDataMatrix(new ArrayList<>(
-                        Arrays.asList(choice))
+                                Arrays.asList(choice))
                         , Objects.requireNonNull(myDataStructDataReal.get(retreiveIdFromField(choice, myDataStructName))));
 
 

@@ -636,7 +636,6 @@ public class MyTimerTask extends TimerTask {
         long secondi1=temp-(minuti1*60);
 
         String toSet = giorno == 0 ? "Nessun aggiornamento" : "Ultimo aggiornamento: " + giorni1 + " giorni " + ore1 + " ore " + minuti1 + " minuti " + secondi1+ " secondi ";
-
         text1.setText(toSet);
 
     }

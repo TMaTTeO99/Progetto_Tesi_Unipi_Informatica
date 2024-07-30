@@ -745,7 +745,7 @@
         <TextView
             android:layout_row="2"
             android:layout_column="5"
-            android:text="W·n⁻²"
+            android:text="W·m⁻²"
             android:textSize="15dp"
             android:layout_gravity="center"
             />
@@ -882,7 +882,7 @@
         <TextView
             android:layout_row="2"
             android:layout_column="9"
-            android:text="KM·h⁻¹"
+            android:text="km·h⁻¹"
             android:textSize="15dp"
             android:layout_gravity="center"
             />
