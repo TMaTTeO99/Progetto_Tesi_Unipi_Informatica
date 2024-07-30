@@ -1,7 +1,6 @@
 package com.example.GreenApp.Alert;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
@@ -37,6 +38,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Function;
 
 /*
  * Progetto: svilluppo App Android per Tirocinio interno
@@ -102,6 +104,10 @@ public class AlertActivity extends AppCompatActivity {
     private static Switch aSwitch;
     private static int minuti=0;
     private static Intent serviceIntent;
+
+    private Activity activity = this;//riferimento all'activity per popup
+    private Channel x = null; //riferimento all channel per popup
+
     private ChannelFieldsSelected checkFlags = new ChannelFieldsSelected();
 
     /**
@@ -200,26 +206,29 @@ public class AlertActivity extends AppCompatActivity {
                     Log.d("AlertActivity","attivo notifiche");
 
                     //abilito le notifiche
-                    Channel x = null;
+                    ShowAlert("Notifiche", "Vuoi Attivare Notifiche ?", false, activity, (y) -> startNotify(), 0);
+
+                    /*
                     String id1 = channel.getLett_id();
                     String id2 = channel.getLett_id_2();
 
                     if(id1 != null)x = database.getChannelStd(id1, channel.getLett_read_key(), 0);//database.ChannelDao().findByName(id1, channel.getLett_read_key());
                     else if(id2 != null)x = database.getChannelStd(id2, channel.getLett_read_key_2(), 1);//database.ChannelDao().findBySecondName(id2, channel.getLett_read_key_2());
-
-                    database.delateChannelStd(x);//database.ChannelDao().delete(x);
+                    */
+                    /*
+                    database.delateChannelStd(x);
                     x.setNotification(true);
-                    database.insertChannelStd(x);//database.ChannelDao().insert(x);
+                    database.insertChannelStd(x);
 
                     //comunico al service che devo attivare le notifiche
                     channel=x;
-                    startService();
+                    startService();*/
                 }
                 else{
                     Log.d("AlertActivity","fermo notifiche");
                     //disabilito le notifiche
 
-                    Channel x = null;
+
                     String id1 = channel.getLett_id();
                     String id2 = channel.getLett_id_2();
 
@@ -241,6 +250,82 @@ public class AlertActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Funzione di supporto per l'avvio effettivo del servizio di notifiche
+     */
+
+    private int startNotify(){
+
+        String id1 = channel.getLett_id();
+        String id2 = channel.getLett_id_2();
+
+        if(id1 != null)x = database.getChannelStd(id1, channel.getLett_read_key(), 0);
+        else if(id2 != null)x = database.getChannelStd(id2, channel.getLett_read_key_2(), 1);
+
+        database.delateChannelStd(x);
+        x.setNotification(true);
+        database.insertChannelStd(x);
+
+        //comunico al service che devo attivare le notifiche
+        channel=x;
+        startService();
+
+        return 0;
+    }
+
+    /**
+     * Metodo aggiunto da Matteo Torchia 599899
+     * Visualizzo popup la conferma dell'attivazione delle notifiche
+     *
+     * @param title
+     * @param mex
+     * @param cancelable
+     * @param activity
+     * @param function_std
+     * @param d
+     * @param <T>
+     * @param <RR>
+     */
+    protected  <T,RR> void ShowAlert(String title, String mex, boolean cancelable, Activity activity, Function<T, RR> function_std, T d){
+        /**
+         *  necessario eseguire il codice nel medodo runOnUiThread di Activity
+         *  in quanto ShowAlert potrebbe essere richiamato a seguito
+         *  dell'esecuzione di un thread separato, non dal thread principale
+         *  come succede per esempio se l'utente cerca di allenare
+         *  il modello senza selezionarer i dati da usare nel training
+         */
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                androidx.appcompat.app.AlertDialog.Builder alertBuilder = new androidx.appcompat.app.AlertDialog.Builder(activity);
+                alertBuilder.setTitle(title);
+
+                alertBuilder
+                        .setMessage(mex)
+                        .setCancelable(cancelable)
+                        .setPositiveButton("Avvia",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                if(function_std != null){
+                                    function_std.apply(d);
+                                }
+                                dialog.cancel();
+                            }
+                        }).setNegativeButton("Chiudi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                aSwitch.setChecked(false);
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = alertBuilder.create();
+                dialog.show();
+            }
+        });
+    }
+
+
+
+
 
     /**
      * Modifica effettuata da Matteo Torchia 599899

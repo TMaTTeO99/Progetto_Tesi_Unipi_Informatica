@@ -547,18 +547,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 if(!isCompletedRange(dataFromDbChoice, startDateSelected, endDataSelected))retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
                 else {
-
                     buildDataFromDatabase(0);
-
-                    /*int diff = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(endDataSelected));
-                    if(diff > 0){
-                        buildDataFromDatabase(1);
-                    }
-                    else if(diff == 0)buildDataFromDatabase(0);
-                    else {
-                        hideLoading();
-                        ShowAlert("ERRORE -0000", "Ipossibile Effettiare Predizione", true, activity, null, null);
-                    }*/
                 }
 
             }
@@ -595,9 +584,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                             hideLoading();
                             ShowAlert("ERRORE -0000", "Ipossibile Effettiare Predizione", true, activity, null, null);
                         }
-
-
-
 
                     }
 

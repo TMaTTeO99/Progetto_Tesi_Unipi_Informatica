@@ -817,7 +817,7 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
                 database.delateAllSaved();//SavedDao().deleteAll();
                 database.insertChannelSaved(new savedValues(id, key_read,pos, id2, key_read2));//database.SavedDao().insert(new savedValues(id, key_read,pos, id2, key_read2));
 
-                // TODO: qui dovro farer in modo di chiamare i dati per entrambi i canali se necessario
+
 
                 channelID_2 = id2;
                 READ_KEY_2 = key_read2;

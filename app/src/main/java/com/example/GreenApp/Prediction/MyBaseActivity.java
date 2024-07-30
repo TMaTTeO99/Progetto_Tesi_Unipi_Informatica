@@ -318,12 +318,9 @@ public class MyBaseActivity extends AppCompatActivity {
          */
         activity.runOnUiThread(new Runnable() {
             public void run() {
+
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity);
-
-                // set title
                 alertBuilder.setTitle(title);
-
-                // set dialog message
                 alertBuilder
                         .setMessage(mex)
                         .setCancelable(cancelable)
@@ -363,10 +360,9 @@ public class MyBaseActivity extends AppCompatActivity {
                 recyclerViewControllo.setLayoutManager(new LinearLayoutManager(activity));
 
                 alertBuilder.setView(popUp);
-                // set title
+
                 alertBuilder.setTitle(title);
 
-                // set dialog message
                 alertBuilder
                         .setMessage(mex)
                         .setCancelable(cancelable)
