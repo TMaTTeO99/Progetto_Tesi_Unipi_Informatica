@@ -227,8 +227,6 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
         Activity activity = this;
 
 
-
-
         /**
          * Faccio binding con componenti grafici peso e vento
          */
@@ -1353,7 +1351,6 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
                     if(field==8) x.setImageVento(name[0]);
 
                     database.insertChannelStd(x);
-                    //database.ChannelDao().insert(x);
 
 
                     restartTimer(cont);

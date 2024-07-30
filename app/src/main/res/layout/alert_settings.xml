@@ -596,7 +596,7 @@
             <TextView
                 android:layout_row="8"
                 android:layout_column="2"
-                android:text="KM·h⁻¹"
+                android:text="km·h⁻¹"
                 android:textSize="15dp"
                 android:layout_gravity="top"
                 />

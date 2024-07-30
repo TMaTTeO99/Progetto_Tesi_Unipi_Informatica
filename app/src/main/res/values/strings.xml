@@ -2,14 +2,24 @@
     <string name="app_name">GreenApp</string>
     <string name="title_activity_graphic">GraphicActivity</string>
     <string name="history">History</string>
-    <string name="data">Select Data</string>
-    <string name="graph">Graph</string>
-    <string name="controlledPrediction">View Controller</string>
-    <string name="refresh">Refresh</string>
+    <string name="data">Seleziona Data</string>
+
+    <!--<string name="graph">Graph</string>-->
+    <string name="graph">Grafico</string>
+
+    <string name="controlledPrediction">Predizione Controllata</string>
+
+    <!--<string name="refresh">Refresh</string>-->
+    <string name="refresh">Aggiorna</string>
+
     <string name="allarmetitle">Allarme Menu</string>
 
-    <string name="prediction">Prediction</string>
-    <string name="settings">Settings</string>
+    <!--<string name="prediction">Prediction</string>-->
+    <string name="prediction">Predizione</string>
+
+    <!--<string name="settings">Settings</string>-->
+    <string name="settings">Impostazioni</string>
+
     <string name="zoom_mode">ZOOM MODE</string>
     <string name="previsione_label">PREVISIONE</string>
 
