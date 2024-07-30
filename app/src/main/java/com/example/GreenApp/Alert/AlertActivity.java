@@ -208,21 +208,6 @@ public class AlertActivity extends AppCompatActivity {
                     //abilito le notifiche
                     ShowAlert("Notifiche", "Vuoi Attivare Notifiche ?", false, activity, (y) -> startNotify(), 0);
 
-                    /*
-                    String id1 = channel.getLett_id();
-                    String id2 = channel.getLett_id_2();
-
-                    if(id1 != null)x = database.getChannelStd(id1, channel.getLett_read_key(), 0);//database.ChannelDao().findByName(id1, channel.getLett_read_key());
-                    else if(id2 != null)x = database.getChannelStd(id2, channel.getLett_read_key_2(), 1);//database.ChannelDao().findBySecondName(id2, channel.getLett_read_key_2());
-                    */
-                    /*
-                    database.delateChannelStd(x);
-                    x.setNotification(true);
-                    database.insertChannelStd(x);
-
-                    //comunico al service che devo attivare le notifiche
-                    channel=x;
-                    startService();*/
                 }
                 else{
                     Log.d("AlertActivity","fermo notifiche");
@@ -303,7 +288,7 @@ public class AlertActivity extends AppCompatActivity {
                 alertBuilder
                         .setMessage(mex)
                         .setCancelable(cancelable)
-                        .setPositiveButton("Avvia",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Attiva",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 if(function_std != null){
                                     function_std.apply(d);
