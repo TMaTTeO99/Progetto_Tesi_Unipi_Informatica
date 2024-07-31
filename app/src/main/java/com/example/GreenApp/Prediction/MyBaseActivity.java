@@ -1055,6 +1055,17 @@ public class MyBaseActivity extends AppCompatActivity {
 
         Model m = Model.getInstance();
 
+        for(int i = 0; i<Vhat.length; i++){
+
+            for(int j = 0; j<Vhat[i].getRowDimension(); j++){
+
+                for(int k = 0; k<Vhat[i].getColumnDimension(); k++){
+                    System.out.print(" " + Vhat[i].get(j, k) + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
         int q = m.getMu0().getRowDimension();
 
         Matrix my_muhat = new Matrix(q, lambda + 1);
@@ -1062,7 +1073,7 @@ public class MyBaseActivity extends AppCompatActivity {
 
 
         my_muhat.setMatrix(0, my_muhat.getRowDimension()-1, 0, 0, muHat.getMatrix(0, muHat.getRowDimension()-1, availableT, availableT));
-        my_varhat[0] =  Vhat[availableT];
+        my_varhat[0] = Vhat[availableT];
 
         for(int i = 0; i<lambda; i++){
             Object [] ret = prediction(m.getA(), m.getB(), U.getMatrix(0, U.getRowDimension()-1, availableT, availableT),
@@ -1073,7 +1084,6 @@ public class MyBaseActivity extends AppCompatActivity {
         }
 
         my_muhat.setMatrix(0, my_muhat.getRowDimension()-1, 0, 0, new Matrix(my_muhat.getRowDimension(), my_muhat.getColumnDimension()));
-        my_varhat[0].setMatrix(0, my_varhat[0].getRowDimension()-1, 0, my_varhat[0].getColumnDimension()-1, new Matrix(q, q));
         Matrix pred = m.getC().times(my_muhat);
 
         for(int i = 0; i<pred.getRowDimension(); i++){
@@ -1083,7 +1093,7 @@ public class MyBaseActivity extends AppCompatActivity {
         }
         return new Object[] {my_varhat, pred, q};
     }
-    protected void makeNewPoint(/*float*/double temperature, /*float*/double irradiance, LineData allListData,
+    protected void makeNewPoint(double temperature, double irradiance, LineData allListData,
                                 LineChart newGraph, double lastTracking, Context activity, LineDataSet setPrediction) throws ParseException{
 
         DataSavedToPredict data = DataSavedToPredict.getInstance();
@@ -1091,6 +1101,7 @@ public class MyBaseActivity extends AppCompatActivity {
         Matrix u = data.getU();
         u.set(0, data.getAvailableT(), temperature);
         u.set(1, data.getAvailableT(), irradiance);
+
 
         Object [] res = doPrediction(data.getLambda(), data.getMuHat() , data.getVhat(), data.getAvailableT(), u, data.getY());
         Matrix pred = (Matrix) res[1];
