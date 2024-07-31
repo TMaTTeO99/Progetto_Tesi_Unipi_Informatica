@@ -123,6 +123,7 @@ public class Training extends MyBaseActivity implements Runnable{
         int dimY = Y.getColumnDimension();
             //if(init){
 
+        //TODO QUI DEVO FARE IL CONTROLLO SUL NUMERO DI DATI NON -INFINITO E NON SULLA DIM
         if(dimY <= 3){
             support.set(0, 0, 1);
             support.set(0, 1, 2);
@@ -130,6 +131,54 @@ public class Training extends MyBaseActivity implements Runnable{
         }
         else {
 
+            //inizializzo le variabili necessarie
+            ArrayList<Double> llh_new = new ArrayList<>();
+            Matrix startSupp = new Matrix(1, 3); //una riga e 3 colonne
+            Random rand = new Random();
+
+            //provo 100 volte a calcolare la llh
+            for(int i = 0; i<100; i++){
+
+                //eseguo un ciclo che prova a trovare 3 punti iniziali che
+                //rendono i parametri del modello dei parametri con valori finiti
+                for(int safeIter = 0; safeIter < 20; safeIter++){
+
+                    //calcolo casualmente 3 punti
+                    int a = rand.nextInt(dimY / 3) + 1;
+                    int b = rand.nextInt(dimY / 3) + (dimY / 3) ;
+                    int c = rand.nextInt(dimY / 3) + ((2 * dimY) / 3) ;
+                    startSupp.set(0, 0, a);
+                    startSupp.set(0, 1, b);
+                    startSupp.set(0, 2, c);
+
+                    //controllo se i punti trovati rendono i parametri del modello
+                    //dei parametri con valori finiti
+                    if(EMAlgorithm.retreiveFirstPoint(Y, U, startSupp)) {
+                        //se i valori sono finiti esco e salvo i 3 punti precedentemente trovati
+                        support = startSupp.getMatrix(0,startSupp.getRowDimension()-1, 0, startSupp.getColumnDimension() - 1);
+                        break;
+                    }
+                }
+
+                //inizializzo i parametri del modello usando i 3 punti recuperati
+                EMAlgorithm.InitEm(Y, U, support);
+
+                //calcolo la llh
+                Object[] res = EMAlgorithm.doForWardStep(Y, U);
+                double llhVal = (double) res[1];
+
+                //la salvo in una lista
+                llh_new.add(llhVal);
+
+                //se sono alla terza iterazione
+                //posso controllare la condizione di llh massima
+                if(i > 1 && llh_new.get(i) - llh_new.get(i-1) < tol*Math.abs(llh_new.get(i-1))) break;
+
+                //ripeto
+            }
+
+            //parte che sto commentando ora
+            /*
             Matrix startSupp = new Matrix(1, 3); //una riga e 3 colonne
             Random rand = new Random();
 
@@ -148,6 +197,8 @@ public class Training extends MyBaseActivity implements Runnable{
                 }
 
             }
+             //fine parte che sto commentando ora
+             */
         }
                 //init = false;
             //}
@@ -165,9 +216,10 @@ public class Training extends MyBaseActivity implements Runnable{
         Matrix [] Ezz = null;
         Matrix [] Dzy = null;
         Matrix [] Dzz = null;
-
+        int maxitercount = 0;
         for(int i = 0; i<maxIter; i++) {
 
+            maxitercount++;
             Object [] ret = EMAlgorithm.EStep(Y, U);
             muHat = (Matrix) ret[3];
             Vhat = (Matrix []) ret[4];
@@ -181,7 +233,7 @@ public class Training extends MyBaseActivity implements Runnable{
 
             EMAlgorithm.MStep(Y, U, muHat, Ezy, Ezz, Dzy, Dzz);
         }
-
+        System.out.println("maxiter in em:" + maxitercount);
         /**
          * Salvo i valori necessari ad effettuare la predizione
          * del valore nel futuro, controllo se sono nel caso in cui
