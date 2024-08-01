@@ -71,6 +71,7 @@ public class ChannelActivity  extends AppCompatActivity {
     /*********************************************/
     private static String DEFAULT_READ_KEY = null;
 
+    private static String name = null;
 
 
     public static void setPosition(int position) {
@@ -94,14 +95,7 @@ public class ChannelActivity  extends AppCompatActivity {
 
         //creo il database
         if(savedInstanceState==null) {
-            /*db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "prodiction")
-                    //consente l'aggiunta di richieste nel thred principale
-                    .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    //build mi serve per costruire il tutto
-                    .build();
 
-             */
             db = AppDatabase.getDataBase(getApplicationContext());
             getValue();
         }
@@ -135,7 +129,7 @@ public class ChannelActivity  extends AppCompatActivity {
      * @param write_scritt: api scrittura chiave scrittura
      */
     public static void Execute(String id, String key, String id_scritt, String read_scritt, String write_scritt,
-                                String id_2, String key_2){
+                                String id_2, String key_2, String nameChannel){
 
         //controllo se i dati inseriti corrispondono ad un channel esistente
         Channel t1 = db.getChannelStd(id, key, 0);
@@ -159,6 +153,7 @@ public class ChannelActivity  extends AppCompatActivity {
             DEFAULT_ID_2 = id_2;
             DEFAULT_READ_KEY_2 = key_2;
 
+            name = nameChannel;
             Boolean [] resultChannels = testData(DEFAULT_ID, DEFAULT_READ_KEY, DEFAULT_ID_2, DEFAULT_READ_KEY_2, id_scritt,read_scritt,write_scritt);
 
             if(!resultChannels[0] && !resultChannels[1]) {
@@ -574,6 +569,8 @@ public class ChannelActivity  extends AppCompatActivity {
                 }
 
                 if(result[0] || result[1]){
+
+                    add.setNameChannel(name);//inserisco il nome del canale
                     db.insertChannelStd(add);
                     channel.add(add);
                 }

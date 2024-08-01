@@ -33,6 +33,7 @@ public class Channelinsert  extends AppCompatActivity {
     private static EditText read_lett;
     private static EditText read_scritt;
     private static EditText write_scritt;
+    private static EditText nameChannel;
 
 
     /**
@@ -64,6 +65,7 @@ public class Channelinsert  extends AppCompatActivity {
          */
         channelID_Lett_2 = findViewById(R.id.channelID_Lett_2);
         channelRead_Lett_2 = findViewById(R.id.channelRead_Lett_2);
+        nameChannel = findViewById(R.id.EntryInsertNome);
 
 
     }
@@ -133,7 +135,7 @@ public class Channelinsert  extends AppCompatActivity {
                 //mando i valori settati all'activity precedente
                 ChannelActivity.Execute(id_lett, readkey_lett, IDscritt.getText().toString(),
                         read_scritt.getText().toString(), write_scritt.getText().toString(),
-                        id_lett_2, readkey_lett_2);
+                        id_lett_2, readkey_lett_2, nameChannel.getText().toString());
 
                 finish();
             }
@@ -141,7 +143,7 @@ public class Channelinsert  extends AppCompatActivity {
             else Toast.makeText(getApplicationContext(),"Chiave di scrittura errata!",Toast.LENGTH_SHORT).show();
         }
         else {
-            ChannelActivity.Execute(id_lett, readkey_lett, null, null, null, id_lett_2, readkey_lett_2);
+            ChannelActivity.Execute(id_lett, readkey_lett, null, null, null, id_lett_2, readkey_lett_2, nameChannel.getText().toString());
             finish();
         }
 

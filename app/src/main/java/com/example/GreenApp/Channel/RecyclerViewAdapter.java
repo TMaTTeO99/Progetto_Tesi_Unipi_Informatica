@@ -90,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.titleRead.setText("Lettura:");
         holder.titleWrite.setText("Scrittura:");
-
+        holder.name.setText("ETICHETTA: " + chan.getNameChannel());
 
         if(channel.get(position).getNotification()) holder.notifiche.setText("NOTIFICHE ON");
         else holder.notifiche.setText("NOTIFICHE OFF");
@@ -142,6 +142,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private FloatingActionButton bottone;
         private RelativeLayout touch_layout;
         private ImageButton star;
+        private TextView name;
 
         /**
          * metodo costruttore
@@ -156,6 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             writeChannel_1=itemView.findViewById(R.id.titleText_3);
             bottone=itemView.findViewById(R.id.Button2);
             star=itemView.findViewById(R.id.favorite);
+            name = itemView.findViewById(R.id.NameChannel);
             touch_layout=itemView.findViewById(R.id.touch_layout);
             notifiche=itemView.findViewById(R.id.textNotification);
         }

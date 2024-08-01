@@ -64,7 +64,10 @@ public class Channel {
     private Double ventoMin = null;
     private Double ventoMax = null;
 
-
+    /**
+     * Variabile per settare il nome del channel qunaod viene inserito
+     */
+    private String nameChannel;
     private String filed1_2 = null;
     private String filed2_2 = null;
     private String filed3_2 = null;
@@ -921,4 +924,12 @@ public class Channel {
     public synchronized int getLastimevalues_channel_2() {return lastimevalues_channel_2;}
 
     public synchronized void setLastimevalues_channel_2(int lastimevalues_channel_2) {this.lastimevalues_channel_2 = lastimevalues_channel_2;}
+
+    public String getNameChannel() {
+        return nameChannel;
+    }
+
+    public void setNameChannel(String nameChannel) {
+        this.nameChannel = nameChannel;
+    }
 }
