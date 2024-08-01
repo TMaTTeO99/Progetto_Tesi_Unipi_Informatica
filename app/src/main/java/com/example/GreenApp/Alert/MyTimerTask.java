@@ -482,8 +482,8 @@ public class MyTimerTask extends TimerTask {
                                 if(somir!=0) notification(ir,channel.getImageirra(),channel.getIrraMin(),channel.getIrraMax(),channel,5,"irradiance", 6);
                                 if(somev!=0) notification(ev,channel.getImagepeso(),channel.getPesMin(),channel.getPesMax(),channel,6,"evapotranspiration", 9);
                                 if(somso!=0) notification(so,channel.getImagesoil(),channel.getSoilMin(),channel.getSoilMax(),channel,7,"moisture", 7);
-                                if(sPesoPianta!=0) notification(so,channel.getImagePesoPianta(),channel.getPesPiantaMin(),channel.getPesPiantaMax(),channel,7,"P0", 2);
-                                if(sVento!=0)notification(so,channel.getImageVento(),channel.getVentoMin(),channel.getVentoMax(),channel,7,"windspeed", 8);
+                                if(sPesoPianta!=0) notification(pesoPianta,channel.getImagePesoPianta(),channel.getPesPiantaMin(),channel.getPesPiantaMax(),channel,7,"P0", 2);
+                                if(sVento!=0)notification(vento,channel.getImageVento(),channel.getVentoMin(),channel.getVentoMax(),channel,7,"windspeed", 8);
                                 try{
                                     Log.d("TEMPO:","distanza settata: "+channel.getTempomax()*60+" distanza attuale: "+ distanza(cretime));
                                     if (channel.getTempomax() != 0 && distanza(cretime) > channel.getTempomax()*60){

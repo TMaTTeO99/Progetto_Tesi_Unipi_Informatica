@@ -122,14 +122,19 @@ public class Training extends MyBaseActivity implements Runnable{
 
         int dimY = Y.getColumnDimension();
             //if(init){
+        int countPositiveValue = 0, idxtmp = 0;
 
-        //TODO QUI DEVO FARE IL CONTROLLO SUL NUMERO DI DATI NON -INFINITO E NON SULLA DIM
-        if(dimY <= 3){
-            support.set(0, 0, 1);
-            support.set(0, 1, 2);
-            support.set(0, 2, 3);
+        for(int i = 0; i<Y.getColumnDimension(); i++){
+
+            if(Y.get(0, i) != Double.NEGATIVE_INFINITY){
+                support.set(0, idxtmp, i+1);
+                countPositiveValue++;
+                idxtmp++;
+            }
+            if(idxtmp == 3)break;
         }
-        else {
+
+        if(dimY > 3 && countPositiveValue > 3) {
 
             //inizializzo le variabili necessarie
             ArrayList<Double> llh_new = new ArrayList<>();

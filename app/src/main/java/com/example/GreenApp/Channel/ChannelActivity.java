@@ -290,11 +290,10 @@ public class ChannelActivity  extends AppCompatActivity {
         chan.setPosition(1);
 
         if(DEFAULT_ID != null){
-            db.getChannelStd(DEFAULT_ID, DEFAULT_READ_KEY, 0).setPosition(1);//db.ChannelDao().findBySecondName(DEFAULT_ID_2, DEFAULT_READ_KEY_2).setPosition(1);
+            db.getChannelStd(DEFAULT_ID, DEFAULT_READ_KEY, 0).setPosition(1);
         }
         else if(DEFAULT_ID_2 != null){
             db.getChannelStd(DEFAULT_ID_2, DEFAULT_READ_KEY_2, 1).setPosition(1);
-            //db.ChannelDao().findByName(DEFAULT_ID, DEFAULT_READ_KEY).setPosition(1);
         }
 
 
@@ -319,11 +318,9 @@ public class ChannelActivity  extends AppCompatActivity {
 
             if(precId != null){
                 db.getChannelStd(precId, precKey, 0).setPosition(0);
-                //db.ChannelDao().findByName(precId, precKey).setPosition(0);
             }
             else {
                 db.getChannelStd(precId2, precKey2, 1).setPosition(0);
-                //db.ChannelDao().findBySecondName(precId2, precKey2).setPosition(0);
             }
 
             //setto la nuova posizione

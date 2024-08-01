@@ -808,31 +808,32 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
                 future.cancel(true); }
             catch (Exception e) { e.printStackTrace(); }
 
-        } else {
+        }
+        else {
 
             //aggiungo alla lista channel default il nuovo solo se è diverso dal precedente
-                if (channeldefault.size() != 0) channeldefault.clear();
+            if (channeldefault.size() != 0) channeldefault.clear();
 
-                channeldefault.add(new savedValues(id, key_read, pos, id2, key_read2));
-                database.delateAllSaved();//SavedDao().deleteAll();
-                database.insertChannelSaved(new savedValues(id, key_read,pos, id2, key_read2));//database.SavedDao().insert(new savedValues(id, key_read,pos, id2, key_read2));
+            channeldefault.add(new savedValues(id, key_read, pos, id2, key_read2));
+            database.delateAllSaved();//SavedDao().deleteAll();
+            database.insertChannelSaved(new savedValues(id, key_read,pos, id2, key_read2));//database.SavedDao().insert(new savedValues(id, key_read,pos, id2, key_read2));
 
 
 
-                channelID_2 = id2;
-                READ_KEY_2 = key_read2;
+            channelID_2 = id2;
+            READ_KEY_2 = key_read2;
 
-                channelID = id;
-                READ_KEY = key_read;
+            channelID = id;
+            READ_KEY = key_read;
 
-                if(channelID_2 != null && !channelID_2.isEmpty()) url_2 = "https://api.thingspeak.com/channels/" + channelID_2 + "/feeds.json?api_key=" + READ_KEY_2 + "&results=100";
-                else url_2 = null;
+            if(channelID_2 != null && !channelID_2.isEmpty()) url_2 = "https://api.thingspeak.com/channels/" + channelID_2 + "/feeds.json?api_key=" + READ_KEY_2 + "&results=100";
+            else url_2 = null;
 
-                if(channelID != null && !channelID.isEmpty()) url = "https://api.thingspeak.com/channels/" + channelID + "/feeds.json?api_key=" + READ_KEY + "&results=100";
-                else url = null;
+            if(channelID != null && !channelID.isEmpty()) url = "https://api.thingspeak.com/channels/" + channelID + "/feeds.json?api_key=" + READ_KEY + "&results=100";
+            else url = null;
 
-                restartTimer(cont);
-            }
+            restartTimer(cont);
+        }
     }
 
     /**

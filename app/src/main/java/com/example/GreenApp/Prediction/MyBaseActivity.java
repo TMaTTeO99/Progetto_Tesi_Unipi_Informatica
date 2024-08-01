@@ -1055,6 +1055,8 @@ public class MyBaseActivity extends AppCompatActivity {
 
         Model m = Model.getInstance();
 
+        /*
+        TODO da eliminare
         for(int i = 0; i<Vhat.length; i++){
 
             for(int j = 0; j<Vhat[i].getRowDimension(); j++){
@@ -1065,7 +1067,7 @@ public class MyBaseActivity extends AppCompatActivity {
                 System.out.println();
             }
             System.out.println();
-        }
+        }*/
         int q = m.getMu0().getRowDimension();
 
         Matrix my_muhat = new Matrix(q, lambda + 1);
