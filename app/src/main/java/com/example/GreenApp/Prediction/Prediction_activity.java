@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 import com.android.volley.Request;
@@ -40,6 +41,8 @@ import com.example.GreenApp.Prediction.Utils.GraphUtils.DateValueFormatter;
 import com.example.GreenApp.Prediction.Data_Structs.SingleAdapter;
 import com.example.GreenApp.Prediction.Utils.DateCallBack;
 import com.example.GreenApp.Prediction.Utils.DatePickerFragment;
+import com.example.GreenApp.Prediction.Utils.GraphUtils.MyFillFormatter;
+import com.example.GreenApp.Prediction.Utils.GraphUtils.MyLineLegendRenderer;
 import com.example.GreenApp.Prediction.Utils.GraphUtils.MyMarkerView;
 import com.example.GreenApp.Prediction.Utils.MyHttpCallBack;
 import com.example.GreenApp.Prediction.Utils.RetreiveData;
@@ -86,6 +89,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     //quando recupero i restanti dal DB in quale posizione vadano messi se prima o dopo
     private int flagPositionDataDB = -1;
 
+    private Double lower = Double.NEGATIVE_INFINITY;
+    private Double upper = Double.NEGATIVE_INFINITY;
     private Channel chaID1 = null;
     private Channel chaID2 = null;
     private static AppDatabase database; //variabile database
@@ -116,6 +121,10 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     private LineChart newGraph = null;
     private LineData allListData = null;
     private LineDataSet setPrediction = null;
+
+    private LineDataSet setLower = null;
+    private LineDataSet setUpper = null;
+
     private TextView startDateView = null;
     private TextView endDateView = null;
     private GridLayout headerPrevisione = null;
@@ -217,6 +226,12 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             minT = state.getMinT();
             selectedTemperature = state.getSelectedTemperature();
             setPrediction = state.getSetPrediction();
+
+
+
+            setLower = state.getSetLower();
+            setUpper = state.getSetUpper();
+
 
 
 
@@ -438,7 +453,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         //abilito l'interfaccia se i dati sono presenti
         if(state.isSavedDataGraph()){
 
-            buildGraph(state.getPrediction(), state.getTraking(), state.getObs());
+            buildGraph(state.getPrediction(), state.getTraking(), state.getObs(), state.getLower(), state.getUpper());
             enableGraphView();
         }
 
@@ -461,6 +476,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         state.setFlagControllerActive(flagControllerActive);
         state.setFlagPredictionDone(flagPredictionDone);
 
+
+
         state.setListForChoice(listForChoice);
 
         state.setLastTraking(lastTraking);
@@ -471,6 +488,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
         state.setSelectedTemperature(selectedTemperature);
         state.setSetPrediction(setPrediction);
+
+        state.setSetLower(setLower);
+        state.setSetUpper(setUpper);
 
 
         state.setSelectedIrradiance(selectedIrradiance);
@@ -856,7 +876,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void finishTraining(boolean errorFlag, Double pred, ArrayList<Double> Traking, Matrix observations, int days) {
+    public void finishTraining(boolean errorFlag, Double pred, ArrayList<Double> Traking, Matrix observations, int days, Double upp, Double low) {
 
 
 
@@ -866,6 +886,12 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
              * che l'utente ha selezionato per costruire il grafico correttamente
              */
             if(AndroidVersionSingleton.getInstance().getAndroidVersioneFlag()){
+
+
+                //recupero il valore di lower e upper
+                upper = upp;
+                lower = low;
+
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate localNow = LocalDate.parse(yesterday, formatter);
@@ -897,8 +923,17 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                     //traking = new ArrayList<>(predictions.subList(0, predictions.size() - 1));
                     ArrayList<Double> prediction = new ArrayList<>();
 
+                    ArrayList<Double> lowerrr = new ArrayList<>();
+                    ArrayList<Double> upperrr = new ArrayList<>();
+
                     prediction.add(Traking.get(Traking.size() - 1));
                     prediction.add(pred);
+
+                    lowerrr.add(Traking.get(Traking.size() - 1));
+                    lowerrr.add(low);
+
+                    upperrr.add(Traking.get(Traking.size() - 1));
+                    upperrr.add(upp);
 
 
                     //salvo il valore dlla predizione scelta inizialmente dall'utente
@@ -913,12 +948,14 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                     state.setTraking(Traking);
                     state.setObs(obs);
 
+                    state.setLower(lowerrr);
+                    state.setUpper(upperrr);
+
                     state.setSavedDataGraph(true);//setto il falg di salvataggio dei dati
-                    buildGraph(prediction, Traking, obs);
+                    buildGraph(prediction, Traking, obs, lowerrr, upperrr);
                 }
                 else {
 
-                    //traking = new ArrayList<>(predictions.subList(0, predictions.size()));
 
                     //salvo i valori del grafico nell'istanza di salvataggio di stato dell activity per ricrearlo
 
@@ -926,9 +963,11 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                     state.setPrediction(null);
                     state.setTraking(Traking);
                     state.setObs(obs);
+                    state.setLower(null);
+                    state.setUpper(null);
 
                     state.setSavedDataGraph(true);//setto il falg di salvataggio dei dati
-                    buildGraph(null, Traking, obs);
+                    buildGraph(null, Traking, obs, null, null);
                 }
 
             }
@@ -939,7 +978,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         }
     }
 
-    private void buildGraph(ArrayList<Double> prediction, ArrayList<Double> traking, ArrayList<Double> obs){
+    private void buildGraph(ArrayList<Double> prediction, ArrayList<Double> traking, ArrayList<Double> obs, ArrayList<Double> lower, ArrayList<Double> upper){
 
         newGraph = findViewById(R.id.Graph_NewType);
         allListData = new LineData();
@@ -964,8 +1003,19 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, dateData.get(traking.size()-1), endDataSelected, "Prediction", Color.BLUE, false);
 
+
+                setLower = (LineDataSet) buildDataSeriesPrediction(lower, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
+                setUpper = (LineDataSet) buildDataSeriesPrediction(upper, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
+
+                setUpper.setFillFormatter(new MyFillFormatter(setLower));
+                newGraph.setRenderer(new MyLineLegendRenderer(newGraph, newGraph.getAnimator(), newGraph.getViewPortHandler()));
+
+                setUpper.setFillDrawable(ContextCompat.getDrawable(activity, R.drawable.my_graph_gradient_low_up));
+
                 //setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, yesterday, endDataSelected, "Prediction", Color.BLUE, false);
                 allListData.addDataSet(setPrediction);
+                allListData.addDataSet(setLower);
+                allListData.addDataSet(setUpper);
             }
 
             newGraph.setData(allListData);
@@ -992,6 +1042,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
             //imposto la leggenda
             setLegend(newGraph);
+
+            setUpper.setDrawFilled(true);
 
             hideLoading();
             enableGraphView();

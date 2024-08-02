@@ -6,6 +6,9 @@
     <color name="trackingColor">#FF000000</color>
     <color name="observationsColor">#d1db00</color>
 
+    <color name="upperLower">#00F7FF</color>
+
+
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#f8f8ff</color>

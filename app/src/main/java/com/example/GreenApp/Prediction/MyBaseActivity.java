@@ -813,6 +813,8 @@ public class MyBaseActivity extends AppCompatActivity {
 
     }
 
+
+
     protected ArrayList<ArrayList<Entry>> buildDataSeries(ArrayList<Double> data, String startDate) throws ParseException{
 
         int idxFragment = 0;
@@ -911,7 +913,7 @@ public class MyBaseActivity extends AppCompatActivity {
      */
     protected void setLegend(LineChart newGraph){
 
-        int numeroDiSerie = 3;
+        int numeroDiSerie = 4;
         int maxLen = 0;
         Legend legend = newGraph.getLegend();
         LegendEntry[] legendEntries = new LegendEntry[numeroDiSerie];
@@ -944,8 +946,12 @@ public class MyBaseActivity extends AppCompatActivity {
                     entry.label = "Osservazioni";
 
                     break;
+                case 3:
+                    entry.formColor = getColor(R.color.upperLower);
+                    entry.label = "Varianza";
+                    break;
             }
-            maxLen = Math.max(maxLen + 8, entry.label.length());
+            maxLen = Math.max(maxLen + 5, entry.label.length());
             legendEntries[i] = entry;
         }
 

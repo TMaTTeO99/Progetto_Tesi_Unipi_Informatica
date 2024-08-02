@@ -274,6 +274,9 @@ public class Training extends MyBaseActivity implements Runnable{
         Matrix pred_upper = new Matrix(d, lambda);
         Matrix pred_lower = new Matrix(d, lambda);
 
+        ArrayList<Double> listPredUpper = new ArrayList<>();
+        ArrayList<Double> listPredLower = new ArrayList<>();
+
         for(int i = 0; i<lambda; i++){
             Matrix arg = m.getC().times(my_varhat[i]).times(m.getC().transpose());
 
@@ -283,20 +286,25 @@ public class Training extends MyBaseActivity implements Runnable{
                     if(arg.get(k,l) <= 0.0) arg.set(k, l, 0.0);
                     else arg.set(k, l, Math.sqrt(arg.get(k,l)));
 
+
+                    listPredUpper.add(pred.get(0, pred.getColumnDimension()-1) + arg.get(k,l));
+                    listPredLower.add(pred.get(0, pred.getColumnDimension()-1) - arg.get(k,l));
                 }
             }
+
+            //listPredUpper.add()
             pred_upper.setMatrix(0, pred_upper.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).plus(diag(arg)));
             pred_lower.setMatrix(0, pred_lower.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).minus(diag(arg)));
         }
 
-        prediction = pred.get(0, 1);
+        prediction = pred.get(0, pred.getColumnDimension()-1);
         //predictionUpper.add(pred_upper);
         //predictionLower.add(pred_lower);
 
 
         //}
 
-        listener.finishTraining(false, prediction, track, matrixPrevisione, dAhead);
+        listener.finishTraining(false, prediction, track, matrixPrevisione, dAhead, listPredUpper.get(listPredUpper.size()-1), listPredLower.get(listPredLower.size()-1));
 
     }
 

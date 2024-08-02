@@ -51,7 +51,8 @@ public class SavedStatePrediction {
     private HashMap<String, List<EntryList>> myDataStructName = null;
     private HashMap<String, ArrayList<DataContainer>> myDataStructDataReal = null;
 
-
+    private LineDataSet setLower = null;
+    private LineDataSet setUpper = null;
     private static AppDatabase database;
     private SeekBar seekBarTemperatura = null;
     private SeekBar seekBarIrradiazione = null;
@@ -119,6 +120,9 @@ public class SavedStatePrediction {
     private ArrayList<Double> prediction = null;
     private ArrayList<Double> traking = null;
     private ArrayList<Double> obs = null;
+
+    private ArrayList<Double> lower;
+    private ArrayList<Double> upper;
 
     /////////////////////////////////////////
     private SavedStatePrediction(){}
@@ -584,5 +588,37 @@ public class SavedStatePrediction {
 
     public void setListForChoice(List<EntryList> listForChoice) {
         this.listForChoice = listForChoice;
+    }
+
+    public ArrayList<Double> getUpper() {
+        return upper;
+    }
+
+    public void setUpper(ArrayList<Double> upper) {
+        this.upper = upper;
+    }
+
+    public ArrayList<Double> getLower() {
+        return lower;
+    }
+
+    public void setLower(ArrayList<Double> lower) {
+        this.lower = lower;
+    }
+
+    public LineDataSet getSetLower() {
+        return setLower;
+    }
+
+    public void setSetLower(LineDataSet setLower) {
+        this.setLower = setLower;
+    }
+
+    public LineDataSet getSetUpper() {
+        return setUpper;
+    }
+
+    public void setSetUpper(LineDataSet setUpper) {
+        this.setUpper = setUpper;
     }
 }
