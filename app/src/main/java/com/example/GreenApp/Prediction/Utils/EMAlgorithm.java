@@ -272,7 +272,7 @@ public class EMAlgorithm {
         System.out.println("dopo ciclo: kappa: " + kappa + " m: " + m + " t0: " + t0 + " iter: " + iter);
         model.setA(D.inverse().times(m));
         model.setB(model.getA().times(kappa));
-        System.out.println();
+
 
     }
 

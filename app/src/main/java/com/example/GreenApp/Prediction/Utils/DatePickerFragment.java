@@ -97,7 +97,6 @@ public class DatePickerFragment extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-
         objCallBack.setDeta(day, month+1, year, flag);
     }
 }

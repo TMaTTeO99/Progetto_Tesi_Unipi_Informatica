@@ -18,7 +18,6 @@ public class Mean {
 
     private String field; //salvo i valori come stringa per non avere problemi con lo storage per inserimento assenza valore
 
-    private boolean field_isSaved;
 
     @NonNull
     private String fieldName;
@@ -68,13 +67,7 @@ public class Mean {
         this.field = field;
     }
 
-    public boolean getField_isSaved() {
-        return field_isSaved;
-    }
 
-    public void setField_isSaved(boolean field_isSaved) {
-        this.field_isSaved = field_isSaved;
-    }
 
 
     public String getFieldName() {

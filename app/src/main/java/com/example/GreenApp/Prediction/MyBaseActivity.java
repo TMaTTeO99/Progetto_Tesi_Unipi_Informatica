@@ -421,9 +421,12 @@ public class MyBaseActivity extends AppCompatActivity {
 
         for(int i = 0; i<dataFromChoice.size()-1; i++){
 
+
             //controllo se il dato successivo sia distante da quello precedente
             //da piu di un giorno, in tal caso ho un buco
-            if(getDayAhead(stringToLocalDate(dataFromChoice.get(i).getData()), stringToLocalDate(dataFromChoice.get(i+1).getData())) > 1){
+
+
+            if(getDayAhead(stringToLocalDate(changeFormatDate(dataFromChoice.get(i).getData(), "yyyy-MM-dd", "dd/MM/yyyy")), stringToLocalDate(changeFormatDate(dataFromChoice.get(i+1).getData(), "yyyy-MM-dd", "dd/MM/yyyy"))) > 1){
                 return false;
             }
         }
@@ -1055,19 +1058,7 @@ public class MyBaseActivity extends AppCompatActivity {
 
         Model m = Model.getInstance();
 
-        /*
-        TODO da eliminare
-        for(int i = 0; i<Vhat.length; i++){
 
-            for(int j = 0; j<Vhat[i].getRowDimension(); j++){
-
-                for(int k = 0; k<Vhat[i].getColumnDimension(); k++){
-                    System.out.print(" " + Vhat[i].get(j, k) + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }*/
         int q = m.getMu0().getRowDimension();
 
         Matrix my_muhat = new Matrix(q, lambda + 1);
@@ -1234,10 +1225,12 @@ public class MyBaseActivity extends AppCompatActivity {
             Mean meanIrradiance = new Mean();
             Mean meanChoice = new Mean();
 
-            //setto la data
-            meanTemperature.setData(dateData.get(i));
-            meanIrradiance.setData(dateData.get(i));
-            meanChoice.setData(dateData.get(i));
+            //setto la data e la formatto per poterla usare nel db
+            String dataFormatted = changeFormatDate(dateData.get(i), "dd/MM/yyyy", "yyyy-MM-dd");
+
+            meanTemperature.setData(dataFormatted);
+            meanIrradiance.setData(dataFormatted);
+            meanChoice.setData(dataFormatted);
 
             //setto id canale
             meanTemperature.setIdChannel(retreiveIdFromField("temperature", myDataStructName));
@@ -1266,6 +1259,7 @@ public class MyBaseActivity extends AppCompatActivity {
             database.insertAllMean(meanChoice);
 
         }
+
     }
 
 

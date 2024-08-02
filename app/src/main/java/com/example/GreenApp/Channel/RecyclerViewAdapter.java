@@ -90,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.titleRead.setText("Lettura:");
         holder.titleWrite.setText("Scrittura:");
-        holder.name.setText("ETICHETTA: " + chan.getNameChannel());
+        holder.name.setText(chan.getNameChannel());
 
         if(channel.get(position).getNotification()) holder.notifiche.setText("NOTIFICHE ON");
         else holder.notifiche.setText("NOTIFICHE OFF");

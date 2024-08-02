@@ -140,6 +140,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     private String ID_2 = null;
 
 
+
+
     /**
      * Utilizzo variabili globali per recuperare il valore massimo e il valore minimo
      * delle seekbar
@@ -416,6 +418,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                         return true;
                     case R.id.navigation_date:
 
+                        gridController.setVisibility(View.GONE);
                         ShowDateSelectable("Data", "Selezionare Data Inizio e Fine", false, activity, (x) -> checkController(), 0, null);
                         return true;
                 }
@@ -524,10 +527,13 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         String choice = adapterPrevisione.getCheckedItems().get(0);
 
         //recuper i dati nell'intevallo di tempo selezionato
-        dataFromDbTemp = database.getDataFromBDTemperature(ID_1, ID_2, "temperature", startDateSelected, endDataSelected);
-        dataFromDbIrr = database.getDataFromBDIrradiance(ID_1, ID_2, "irradiance", startDateSelected, endDataSelected);
-        dataFromDbChoice = database.getDataFromBDChoice(ID_1, ID_2, choice, startDateSelected, endDataSelected);
 
+
+        dataFromDbTemp = database.getDataFromBDTemperature(ID_1, ID_2, "temperature", changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
+        dataFromDbIrr = database.getDataFromBDIrradiance(ID_1, ID_2, "irradiance", changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
+        dataFromDbChoice = database.getDataFromBDChoice(ID_1, ID_2, choice, changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
+
+        List<Mean> means = database.getAllMean();
 
         //se non ho dati
         if(dataFromDbChoice == null || dataFromDbChoice.isEmpty()){
@@ -539,8 +545,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             //se sono presenti dati controllo se in quell'arco temporale sono presenti i dati scelti dall'utente
 
 
-            boolean startDataFlag = dataFromDbChoice.contains(new Mean(startDateSelected));
-            boolean endDataFLag = dataFromDbChoice.contains(new Mean(endDataSelected));
+
+            boolean startDataFlag = dataFromDbChoice.contains(new Mean(changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd")));
+            boolean endDataFLag = dataFromDbChoice.contains(new Mean(changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd")));
 
             //caso in cui ho i dati della scelta dell'utente
             if(startDataFlag && endDataFLag){
@@ -562,10 +569,11 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                         //devo controllare se la data finale scelta dall'utente è maggiore rispetto alla fine dei dati cho ho gia
                         //quindi rispetto alla data di ieri
-                        int diff = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(endDataSelected));
+
+                        int diff = getDayAhead(stringToLocalDate(changeFormatDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData(), "yyyy-MM-dd", "dd/MM/yyyy")),  stringToLocalDate(endDataSelected));
 
                         //recupero la differenza di giorni fra gli ultimi dati che ho e ieri
-                        int diffFromYesterday = getDayAhead(stringToLocalDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData()),  stringToLocalDate(yesterday));
+                        int diffFromYesterday = getDayAhead(stringToLocalDate(changeFormatDate(dataFromDbChoice.get(dataFromDbChoice.size() - 1).getData(), "yyyy-MM-dd", "dd/MM/yyyy")),  stringToLocalDate(yesterday));
 
                         //se la data che l'utente ha scelto rispetto ai dati che ho gia è maggiore
                         if(diff > 0){
@@ -811,8 +819,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             }
             else datach.add(Double.parseDouble(v));
 
-
-            dateData.add(dataFromDbTemp.get(i).getData());
+            dateData.add(changeFormatDate(dataFromDbTemp.get(i).getData(), "yyyy-MM-dd", "dd/MM/yyyy"));
 
         }
 
@@ -850,6 +857,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void finishTraining(boolean errorFlag, Double pred, ArrayList<Double> Traking, Matrix observations, int days) {
+
+
 
         if(!errorFlag) {
             /**
@@ -1386,7 +1395,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 //inserisco i dati nel db
                 insertOnDatabase(idxDate, dateData, myDataStructName, fieldMeans, getApplicationContext(), adapterPrevisione);
-
 
                 //Per poter settare il listener nella classe doTraining devo lanciare il thread
                 //di doTraining dal thread main

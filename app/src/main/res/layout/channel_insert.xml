@@ -36,7 +36,7 @@
             android:layout_width="150dp"
             android:layout_height="36dp"
             android:ems="10"
-            android:hint="INSERISCI ETICHETTA"
+            android:hint="inserisci etichetta"
             android:inputType="text"
             android:textSize="12sp"/>
 

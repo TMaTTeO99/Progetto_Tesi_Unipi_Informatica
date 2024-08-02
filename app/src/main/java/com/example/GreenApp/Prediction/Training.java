@@ -34,6 +34,9 @@ public class Training extends MyBaseActivity implements Runnable{
     private int timeMin = 5;
     private String startDate;
     private String endData;
+
+    //todo da eliminare
+    private String tttt = null;
     private List<String> listaControllo;
     private List<String> listaPrevisione;
     protected HashMap<String, ArrayList<DataContainer>> myDataStructDataReal;
@@ -211,6 +214,7 @@ public class Training extends MyBaseActivity implements Runnable{
 
 
         EMAlgorithm.InitEm(Y, U, support);
+
         Matrix llh = new Matrix(1, maxIter);
         for(int idxllh = 0; idxllh < maxIter; idxllh++){llh.set(0, idxllh, Double.NEGATIVE_INFINITY);}
 
@@ -261,32 +265,29 @@ public class Training extends MyBaseActivity implements Runnable{
 
         Object [] res = doPrediction(lambda, muHat, Vhat, availableT, U, Y);
 
-        //Matrix [] my_varhat = (Matrix []) res[0];
+        Matrix [] my_varhat = (Matrix []) res[0];
         Matrix pred = (Matrix)res[1];
 
-            /*Model m = Model.getInstance();
 
-            int d = Y.getRowDimension();
-            Matrix pred_upper = new Matrix(d, lambda);
-            Matrix pred_lower = new Matrix(d, lambda);
 
-            for(int i = 0; i<lambda; i++){
-                Matrix arg = m.getC().times(my_varhat[i]).times(m.getC().transpose());
+        int d = Y.getRowDimension();
+        Matrix pred_upper = new Matrix(d, lambda);
+        Matrix pred_lower = new Matrix(d, lambda);
 
-                for(int k = 0; k<arg.getRowDimension(); k++){
-                    for(int l = 0; l<arg.getColumnDimension(); l++){
+        for(int i = 0; i<lambda; i++){
+            Matrix arg = m.getC().times(my_varhat[i]).times(m.getC().transpose());
 
-                        if(arg.get(k,l) <= 0.0) arg.set(k, l, 0.0);
-                        else arg.set(k, l, Math.sqrt(arg.get(k,l)));
+            for(int k = 0; k<arg.getRowDimension(); k++){
+                for(int l = 0; l<arg.getColumnDimension(); l++){
 
-                    }
+                    if(arg.get(k,l) <= 0.0) arg.set(k, l, 0.0);
+                    else arg.set(k, l, Math.sqrt(arg.get(k,l)));
+
                 }
-                pred_upper.setMatrix(0, pred_upper.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).plus(diag(arg)));
-                pred_lower.setMatrix(0, pred_lower.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).minus(diag(arg)));
             }
-
-            System.out.println("PREDICTION: " + pred.get(0, 1));*/
-
+            pred_upper.setMatrix(0, pred_upper.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).plus(diag(arg)));
+            pred_lower.setMatrix(0, pred_lower.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).minus(diag(arg)));
+        }
 
         prediction = pred.get(0, 1);
         //predictionUpper.add(pred_upper);

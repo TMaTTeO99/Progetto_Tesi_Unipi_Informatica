@@ -47,7 +47,7 @@ import java.util.concurrent.Future;
  * Rendo il database singleton in modo da recuperare in ogni parte del codice
  * la setssa istanza
  */
-@Database(entities = {Channel.class, savedValues.class, Mean.class}, version = 13,exportSchema = false)
+@Database(entities = {Channel.class, savedValues.class, Mean.class}, version = 10,exportSchema = false)
 
 
 public abstract class AppDatabase extends RoomDatabase {
