@@ -168,7 +168,7 @@ public class EMAlgorithm {
 
 
         int k = U.getRowDimension();
-        int d = 1; //dimensione delle osservazioni (U.getRowDimension() potrei usare <-- per essere generale)
+        int d = 1;
 
         double epsilon = 1e-6; //10 ^ -6
         int nmax = 10;
@@ -186,14 +186,6 @@ public class EMAlgorithm {
         model.setΣ(tmp);
         model.setΣ_w(Matrix.identity(d, d).times(epsilon));
 
-        /**
-         * Stampa di test
-         */
-
-        model.printTestMatrix(model.getΣ_n(), "Σ_n == G");
-        model.printTestMatrix(model.getΣ_w(), "Σ_w == S");
-        model.printTestMatrix(model.getΣ(), "Σ == P0");
-
 
         Matrix tmp_2 = new Matrix(d, k);
         for(int i = 0; i<d; i++) {
@@ -203,26 +195,11 @@ public class EMAlgorithm {
         }
         model.setC(tmp_2);
 
-        /**
-         * Stampa di test
-         */
-        model.printTestMatrix(model.getC(), "C");
-
-
         model.setMu0(
                 model.getC().transpose()
                         .times(model.getC().
                                 times(model.getC().transpose()).inverse())
                         .times(Y.get(0, (int)(s.get(0, 0) - 1.0))));
-        /*
-        model.setMu0(model.getC().transpose().times(
-                model.getC().times(model.getC().transpose()).inverse()
-        ).times(Y.getMatrix(0, Y.getRowDimension() - 1, (int)(s.get(0,0) - 1), (int)(s.get(0,0) - 1))));
-         */
-        /**
-         * Stampa di test
-         */
-        model.printTestMatrix(model.getMu0(), "MU0");
 
 
         Matrix D = null;
@@ -242,9 +219,6 @@ public class EMAlgorithm {
         double t0 = 0;
         double kappa = getRealKappa(Y);
         int iter = 0;
-
-
-
 
         for(int i = 0; i<nmax; i++) {
 
@@ -297,35 +271,6 @@ public class EMAlgorithm {
 
     public static Object [] EStep(Matrix Y, Matrix U) {
 
-        /**
-         * Sezione di init
-         */
-
-        /*Model model = Model.getInstance();
-        Matrix A = model.getA();
-        Matrix B = model.getB();
-        Matrix Σ_n = model.getΣ_n();//Σ_n == G in mathlab
-        Matrix C = model.getC();
-        Matrix Σ_w = model.getΣ_w();//Σ_w == S in mathlab
-        Matrix Mu0 = model.getMu0();
-        Matrix Σ = model.getΣ(); // Σ == P0 in mathlab
-
-        int n = Y.getColumnDimension();
-        int q = Mu0.getRowDimension();
-        Matrix mu = new Matrix(q, n);
-
-         */
-
-        /**
-         * Per implementare le matrici tridimansionali uso array di matrici
-         */
-
-        /*
-        Matrix [] V = init3DMatrix(q, q, n);
-
-        Matrix [] P = init3DMatrix(q, q, n);
-        Matrix llh = new Matrix(1, n);
-        Matrix I = Matrix.identity(q, q);*/
 
 
         /**
@@ -341,47 +286,7 @@ public class EMAlgorithm {
         Matrix I = (Matrix) res[6];
         int n = (int) res[8];
         int q = (int) res[7];
-        /*
-        Matrix PC = Σ.times(C.transpose());
-        Matrix R = C.times(PC).plus(Σ_w);
-        Matrix K = PC.times(R.inverse());
 
-        if(Y.get(Y.getRowDimension() - 1, 0) != NEGATIVE_INFINITY) {
-            mu.setMatrix(0, mu.getRowDimension() - 1, 0, 0, Mu0.plus(
-                    K.times(
-                            Y.getMatrix(0, Y.getRowDimension()-1, 0, 0).minus(C.times(Mu0))
-                    )
-            ));
-            llh.set(0,0, log(multivarn(mu.getMatrix(0, mu.getRowDimension()-1, 0, 0), Mu0, Σ)));
-        }
-        else {
-            mu.setMatrix(0, mu.getRowDimension() - 1, 0, 0, Mu0);
-            llh.set(0, 0, NEGATIVE_INFINITY);
-        }
-        V[0] = I.minus(K.times(C)).times(Σ);
-
-        for(int i = 1; i<n; i++){
-
-            Object [] ret = forwardStep(Y.getMatrix(0, Y.getRowDimension()-1, i, i),
-                    U.getMatrix(0, U.getRowDimension()-1, i-1, i-1),
-                    mu.getMatrix(0, mu.getRowDimension()-1, i-1, i-1),
-                    V[i-1], A, B, Σ_n, C, Σ_w, I);
-
-            mu.setMatrix(0, mu.getRowDimension()-1, i, i, (Matrix) ret[0]);
-            V[i] = (Matrix) ret[1];
-            P[i-1] = (Matrix) ret[2];
-            llh.set(0, i, (double)ret[3]);
-
-        }
-        //recupero il valore in llh
-        double llhVal = 0.0;
-        for(int i = 0; i< llh.getColumnDimension(); i++) {
-            double tmpllh = llh.get(0, i);
-            if(tmpllh != NEGATIVE_INFINITY && tmpllh != POSITIVE_INFINITY){
-                llhVal += tmpllh;
-            }
-        }
-        */
         /**
          * Sezione backward
          */

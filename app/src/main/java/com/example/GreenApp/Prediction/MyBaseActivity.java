@@ -45,11 +45,13 @@ import com.example.GreenApp.Prediction.Utils.GraphUtils.MyLineLegendRenderer;
 import com.example.GreenApp.Prediction.Utils.GraphUtils.MyMarkerView;
 import com.example.GreenApp.Prediction.Utils.SelectionAdapter;
 import com.example.firstapp.R;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -808,7 +810,7 @@ public class MyBaseActivity extends AppCompatActivity {
 
 
         LineDataSet set = new LineDataSet(values, name);
-        custimizeGraphicData(2, 4, enableT, 10, 10,color, set);
+        custimizeGraphicData(2, 4, enableT, 10, 10,color, set, "prediction");
         return set;
 
     }
@@ -843,6 +845,47 @@ public class MyBaseActivity extends AppCompatActivity {
         return fragmentedSeries;
     }
 
+
+    /**
+     * Per le misurazioni per visualizzare i singoli valori scollegati
+     * creo una serie di dati diversa per ogni valore
+     * @param data
+     * @param startDate
+     * @return
+     * @throws ParseException
+     */
+    protected ArrayList<ArrayList<Entry>> buildDataSeriesMeasurement(ArrayList<Double> data, String startDate) throws ParseException{
+
+
+
+        int idxFragment = 0;
+        ArrayList<ArrayList<Entry>> fragmentedSeries = new ArrayList<>();
+
+        long referenceTime = getReferceTime(startDate);
+
+
+        fragmentedSeries.add(new ArrayList<>());
+        for(int i = 0; i < data.size(); i++){
+
+            //se il metodo è stato chiamato per settare i dati di previsione
+            double d = data.get(i);
+
+            if(d != Double.NEGATIVE_INFINITY){
+                fragmentedSeries.get(idxFragment).add(new BarEntry(referenceTime + (i * DayInLong), (float) d));
+                fragmentedSeries.add(new ArrayList<>());
+                idxFragment++;
+            }
+            else {
+                fragmentedSeries.add(new ArrayList<>());
+                idxFragment++;
+            }
+
+        }
+
+
+        return fragmentedSeries;
+
+    }
 
     protected boolean checkDayAhead(LocalDate dataCur, LocalDate dataNext) throws Exception {
 
@@ -913,7 +956,7 @@ public class MyBaseActivity extends AppCompatActivity {
      */
     protected void setLegend(LineChart newGraph){
 
-        int numeroDiSerie = 4;
+        int numeroDiSerie = 3;
         int maxLen = 0;
         Legend legend = newGraph.getLegend();
         LegendEntry[] legendEntries = new LegendEntry[numeroDiSerie];
@@ -923,35 +966,36 @@ public class MyBaseActivity extends AppCompatActivity {
             LegendEntry entry = new LegendEntry();
 
 
-            entry.form = Legend.LegendForm.LINE;
-            entry.formLineWidth = 2f;
-            entry.formSize = 20f;
+
+
 
             switch (i){
                 case 0:
                     entry.formColor = getColor(R.color.predictionColor);
                     entry.label = "Previsione";
+                    entry.form = Legend.LegendForm.LINE;
+                    entry.formLineWidth = 2f;
+                    entry.formSize = 20f;
                     break;
                 case 1:
 
                     entry.formLineDashEffect = new DashPathEffect(new float[]{10f, 5f}, 0f);
                     entry.formColor = getColor(R.color.trackingColor);
-
-                    entry.label = "Traking";
-
+                    entry.form = Legend.LegendForm.LINE;
+                    entry.label = "Tracking";
+                    entry.formLineWidth = 2f;
+                    entry.formSize = 20f;
                     break;
                 case 2:
 
                     entry.formColor = getColor(R.color.observationsColor);
                     entry.label = "Osservazioni";
+                    entry.form = Legend.LegendForm.CIRCLE;
+                    entry.formSize = 12f;
+                    break;
 
-                    break;
-                case 3:
-                    entry.formColor = getColor(R.color.upperLower);
-                    entry.label = "Varianza";
-                    break;
             }
-            maxLen = Math.max(maxLen + 5, entry.label.length());
+            maxLen = Math.max(maxLen + 8, entry.label.length());
             legendEntries[i] = entry;
         }
 
@@ -967,14 +1011,58 @@ public class MyBaseActivity extends AppCompatActivity {
 
     }
 
-    protected void custimizeGraphicData(float lineWidth, float circleRadius, boolean enable, float lineLength, float spaceLengthm, int color, LineDataSet set) {
+    protected void custimizeGraphicData(float lineWidth, float circleRadius, boolean enable, float lineLength, float spaceLengthm, int color, LineDataSet set, String namedata) {
 
-        set.setColor(color);
-        set.setCircleColor(color);
-        set.setCircleHoleColor(color);
-        set.setLineWidth(lineWidth);
-        set.setCircleRadius(circleRadius);
-        if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
+        switch (namedata){
+
+            case "Tracking" :
+                set.setColor(color);
+                //set.setCircleColor(color);
+                //set.setCircleHoleColor(color);
+                set.setLineWidth(lineWidth);
+                //set.setCircleRadius(circleRadius);
+                set.setDrawCircles(false);
+
+                //non so se i valori vanno disegnati
+                set.setDrawValues(false);
+
+                if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
+                break;
+            case "prediction" :
+                set.setColor(color);
+                set.setCircleColor(color);
+                set.setCircleHoleColor(color);
+                set.setLineWidth(lineWidth);
+                set.setCircleRadius(circleRadius);
+                if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
+                break;
+            case "Observations" :
+
+                set.setDrawCircles(true);
+
+
+                //////////////////////////////////
+                set.setColor(color);
+                set.setCircleColor(color);
+                set.setCircleHoleColor(color);
+                set.setLineWidth(0f);
+                //set.setLineWidth(lineWidth);
+                set.setCircleRadius(circleRadius);
+
+                //if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
+
+                break;
+            case "LowerUpper" :
+                set.setColor(color);
+                set.setCircleColor(color);
+                set.setCircleHoleColor(color);
+                set.setLineWidth(lineWidth);
+                set.setCircleRadius(circleRadius);
+                if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
+                break;
+        }
+
+
 
     }
     protected String fixData(int d){
@@ -1130,6 +1218,8 @@ public class MyBaseActivity extends AppCompatActivity {
         }
 
         allListData.addDataSet(lastNewDataSet);
+
+
         newGraph.setData(allListData);
 
         XAxis xAxis = newGraph.getXAxis();

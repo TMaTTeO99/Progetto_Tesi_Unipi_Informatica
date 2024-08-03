@@ -4,7 +4,7 @@
 
     <color name="predictionColor">#032a85</color>
     <color name="trackingColor">#FF000000</color>
-    <color name="observationsColor">#d1db00</color>
+    <color name="observationsColor">#F511BC</color>
 
     <color name="upperLower">#00F7FF</color>
 

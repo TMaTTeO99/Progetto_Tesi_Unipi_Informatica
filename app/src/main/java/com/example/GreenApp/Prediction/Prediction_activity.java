@@ -49,8 +49,10 @@ import com.example.GreenApp.Prediction.Utils.RetreiveData;
 import com.example.GreenApp.Prediction.Utils.SelectionAdapter;
 import com.example.GreenApp.Prediction.Utils.TrainingCallBack;
 import com.example.firstapp.R;
+import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -880,6 +882,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
 
+
+
         if(!errorFlag) {
             /**
              * Se la previsione è stata completata con successo, controllo le date
@@ -993,17 +997,15 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         try {
 
             ArrayList<ArrayList<Entry>> fragments = buildDataSeries(traking, dateData.get(0));
-            //ArrayList<ArrayList<Entry>> fragments = buildDataSeries(traking, startDateSelected);
             addFragments(allListData, fragments, "Tracking", Color.BLACK, true);
 
-            fragments = buildDataSeries(obs, dateData.get(0));
-            addFragments(allListData, fragments, "Observations", Color.YELLOW, false);
+            fragments = buildDataSeriesMeasurement(obs, dateData.get(0));
+            addFragments(allListData, fragments, "Observations", getColor(R.color.observationsColor), false);
 
             if(prediction != null){
 
                 setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, dateData.get(traking.size()-1), endDataSelected, "Prediction", Color.BLUE, false);
-
-
+                setPrediction.setDrawCircles(false);
                 setLower = (LineDataSet) buildDataSeriesPrediction(lower, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
                 setUpper = (LineDataSet) buildDataSeriesPrediction(upper, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
 
@@ -1013,6 +1015,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 setUpper.setFillDrawable(ContextCompat.getDrawable(activity, R.drawable.my_graph_gradient_low_up));
 
                 //setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, yesterday, endDataSelected, "Prediction", Color.BLUE, false);
+
+                setLower.setDrawCircles(false);
+                setUpper.setDrawCircles(false);
                 allListData.addDataSet(setPrediction);
                 allListData.addDataSet(setLower);
                 allListData.addDataSet(setUpper);
@@ -1063,8 +1068,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
         for(ArrayList<Entry> fragment : fragments) {
             LineDataSet set = new LineDataSet(fragment, name);
-            custimizeGraphicData(2, 4, flag, 10, 10,color, set);
+            custimizeGraphicData(2, 4, flag, 10, 10,color, set, name);
             allListData.addDataSet(set);
+
         }
 
     }
