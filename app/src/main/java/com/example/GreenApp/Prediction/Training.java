@@ -61,20 +61,9 @@ public class Training extends MyBaseActivity implements Runnable{
         //costruisco la matrice di controllo
         int maxIter = 100;//iterazioni massima per EM_algoritm
         int lambda = 1;
-        //int timeMin = 5;
         double tol = 1e-4;
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            timeMin = measurementDate.indexOf(startDate) - 1; //-1 perche per predire dal giorno selezionato dall utente parto da quello prima
-        }
 
-        if((daysAhead = measurementDate.indexOf(endData)) == -1) {
-            daysAhead = measurementDate.indexOf(yesterday);
-        }
-        else daysAhead -= 1; //devo sottrarre 1 perche devo predire un giorno che è
-                             //presente fra i miei dati quindi mi fermo il giorno prima
-
-         */
         /**
          * availableT : variabile usata per fermare i dati di controllo all'ultima data disponibile
          *              quando dovrò effettuare i calcoli nel futuro
@@ -100,31 +89,14 @@ public class Training extends MyBaseActivity implements Runnable{
          */
 
 
-        //boolean checkOnlytraking = getDayAhead(stringToLocalDate(yesterday), stringToLocalDate(measurementDate.get(measurementDate.size() - 1))) < 0;
-
-        //for(int T = timeMin; T <= daysAhead; T += lambda) {
-
-
-            //if(T <= measurementDate.indexOf(yesterday) || checkOnlytraking){
-
-
-        //availableT = measurementDate.indexOf(yesterday);
-                //availableT = T;
         availableT = daysAhead;
         lambda = dAhead;
 
-                //if(T == measurementDate.indexOf(yesterday))lambda = dAhead;
-            //}
-            /*if(T == measurementDate.indexOf(yesterday)) {
-                System.out.println();
-            }
-            */
         Matrix U = matrixControll.getMatrix(0, matrixControll.getRowDimension()-1, 0, matrixPrevisione.getColumnDimension()-1);
         Matrix Y = matrixPrevisione.getMatrix(0, matrixPrevisione.getRowDimension()-1, 0, matrixPrevisione.getColumnDimension()-1);
 
 
         int dimY = Y.getColumnDimension();
-            //if(init){
         int countPositiveValue = 0, idxtmp = 0;
 
         for(int i = 0; i<Y.getColumnDimension(); i++){
@@ -185,33 +157,7 @@ public class Training extends MyBaseActivity implements Runnable{
                 //ripeto
             }
 
-            //parte che sto commentando ora
-            /*
-            Matrix startSupp = new Matrix(1, 3); //una riga e 3 colonne
-            Random rand = new Random();
-
-            for(int safeIter = 0; safeIter < 20; safeIter++){
-
-                int a = rand.nextInt(dimY / 3) + 1;
-                int b = rand.nextInt(dimY / 3) + (dimY / 3) ;
-                int c = rand.nextInt(dimY / 3) + ((2 * dimY) / 3) ;
-                startSupp.set(0, 0, a);
-                startSupp.set(0, 1, b);
-                startSupp.set(0, 2, c);
-
-                if(EMAlgorithm.retreiveFirstPoint(Y, U, startSupp)) {
-                    support = startSupp.getMatrix(0,startSupp.getRowDimension()-1, 0, startSupp.getColumnDimension() - 1);
-                    break;
-                }
-
-            }
-             //fine parte che sto commentando ora
-             */
         }
-                //init = false;
-            //}
-
-
 
         EMAlgorithm.InitEm(Y, U, support);
 
@@ -242,16 +188,13 @@ public class Training extends MyBaseActivity implements Runnable{
 
             EMAlgorithm.MStep(Y, U, muHat, Ezy, Ezz, Dzy, Dzz);
         }
-        System.out.println("maxiter in em:" + maxitercount);
         /**
          * Salvo i valori necessari ad effettuare la predizione
          * del valore nel futuro, controllo se sono nel caso in cui
          * devo predirer il valore nel futuro, in tal caso i dati
          * parametri del modello sono pronti
          */
-        //if(T == measurementDate.indexOf(yesterday)){
         saveDataToPredict(lambda, availableT, muHat, Vhat, Y, U);
-        //}
 
         Model m = Model.getInstance();
         Matrix matrixTrak = m.getC().times(muHat);
@@ -261,18 +204,13 @@ public class Training extends MyBaseActivity implements Runnable{
         for(int i = timeMin; i <= daysAhead; i++){
             track.add(matrixTrak.get(0,i));
         }
-
-
+        
         Object [] res = doPrediction(lambda, muHat, Vhat, availableT, U, Y);
 
         Matrix [] my_varhat = (Matrix []) res[0];
         Matrix pred = (Matrix)res[1];
 
-
-
         int d = Y.getRowDimension();
-        Matrix pred_upper = new Matrix(d, lambda);
-        Matrix pred_lower = new Matrix(d, lambda);
 
         ArrayList<Double> listPredUpper = new ArrayList<>();
         ArrayList<Double> listPredLower = new ArrayList<>();
@@ -286,24 +224,14 @@ public class Training extends MyBaseActivity implements Runnable{
                     if(arg.get(k,l) <= 0.0) arg.set(k, l, 0.0);
                     else arg.set(k, l, Math.sqrt(arg.get(k,l)));
 
-
                     listPredUpper.add(pred.get(0, pred.getColumnDimension()-1) + arg.get(k,l));
                     listPredLower.add(pred.get(0, pred.getColumnDimension()-1) - arg.get(k,l));
                 }
             }
-
-            //listPredUpper.add()
-            pred_upper.setMatrix(0, pred_upper.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).plus(diag(arg)));
-            pred_lower.setMatrix(0, pred_lower.getRowDimension()-1, i,i, pred.getMatrix(0, pred.getRowDimension()-1, i,i).minus(diag(arg)));
         }
 
+
         prediction = pred.get(0, pred.getColumnDimension()-1);
-        //predictionUpper.add(pred_upper);
-        //predictionLower.add(pred_lower);
-
-
-        //}
-
         listener.finishTraining(false, prediction, track, matrixPrevisione, dAhead, listPredUpper.get(listPredUpper.size()-1), listPredLower.get(listPredLower.size()-1));
 
     }
