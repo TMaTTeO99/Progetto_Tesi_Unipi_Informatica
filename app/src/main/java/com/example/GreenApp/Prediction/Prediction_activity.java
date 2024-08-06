@@ -882,8 +882,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
 
-
-
         if(!errorFlag) {
             /**
              * Se la previsione è stata completata con successo, controllo le date
@@ -999,12 +997,22 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             ArrayList<ArrayList<Entry>> fragments = buildDataSeries(traking, dateData.get(0));
             addFragments(allListData, fragments, "Tracking", Color.BLACK, true);
 
+
+            //////////////
+            /*
+            ArrayList<Entry> listWithLastTrackX = fragments.get(fragments.size() - 1);
+            Entry lastTrackEntry = listWithLastTrackX.get(listWithLastTrackX.size() - 1);
+            */
+            /////////////////////////
+
+
+
             fragments = buildDataSeriesMeasurement(obs, dateData.get(0));
             addFragments(allListData, fragments, "Observations", getColor(R.color.observationsColor), false);
 
             if(prediction != null){
 
-                setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, dateData.get(traking.size()-1), endDataSelected, "Prediction", Color.BLUE, false);
+                setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, yesterday, endDataSelected, "Prediction", Color.BLUE, false);
                 setPrediction.setDrawCircles(false);
                 setLower = (LineDataSet) buildDataSeriesPrediction(lower, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
                 setUpper = (LineDataSet) buildDataSeriesPrediction(upper, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
@@ -1013,8 +1021,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 newGraph.setRenderer(new MyLineLegendRenderer(newGraph, newGraph.getAnimator(), newGraph.getViewPortHandler()));
 
                 setUpper.setFillDrawable(ContextCompat.getDrawable(activity, R.drawable.my_graph_gradient_low_up));
-
-                //setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, yesterday, endDataSelected, "Prediction", Color.BLUE, false);
 
                 setLower.setDrawCircles(false);
                 setUpper.setDrawCircles(false);

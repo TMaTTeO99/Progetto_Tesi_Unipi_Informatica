@@ -786,7 +786,37 @@ public class MyBaseActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date referenceDate = sdf.parse(data);
-        return referenceDate.getTime();
+
+        //recupero il timestamp ottenuto dalla data
+        long valueTime = referenceDate.getTime();
+        Date dataProfTimeStamp = new Date(valueTime);
+
+        //controllo che il timestamp restituisca la data corretta e non quella precedente
+        String stringDataProfTimeStamp = sdf.format(dataProfTimeStamp);
+        int checkDiff = getDayAhead(stringToLocalDate(stringDataProfTimeStamp), stringToLocalDate(data));
+
+        //se il time stamp recuperato si riferisce alla data precedente
+        if(checkDiff > 0){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(valueTime);
+            int initialDay = calendar.get(Calendar.DAY_OF_YEAR);
+            while (calendar.get(Calendar.DAY_OF_YEAR) == initialDay) {
+                calendar.add(Calendar.HOUR_OF_DAY, 1);
+            }
+        }
+        else if(checkDiff < 0){
+            //se il time stamp recuperato si riferisce alla data successiva
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(valueTime);
+            int initialDay = calendar.get(Calendar.DAY_OF_YEAR);
+            while (calendar.get(Calendar.DAY_OF_YEAR) == initialDay) {
+                calendar.add(Calendar.HOUR_OF_DAY, -1);
+            }
+            valueTime = calendar.getTimeInMillis();
+        }
+        System.out.println("la data from timestamp: " + stringDataProfTimeStamp);
+        return valueTime;
     }
 
     protected ILineDataSet buildDataSeriesPrediction(ArrayList<Double> data, String lastTrack, String endDataSelected, String name, int color, boolean enableT) throws ParseException {
@@ -1017,13 +1047,8 @@ public class MyBaseActivity extends AppCompatActivity {
 
             case "Tracking" :
                 set.setColor(color);
-                //set.setCircleColor(color);
-                //set.setCircleHoleColor(color);
                 set.setLineWidth(lineWidth);
-                //set.setCircleRadius(circleRadius);
                 set.setDrawCircles(false);
-
-                //non so se i valori vanno disegnati
                 set.setDrawValues(false);
 
                 if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
@@ -1039,17 +1064,11 @@ public class MyBaseActivity extends AppCompatActivity {
             case "Observations" :
 
                 set.setDrawCircles(true);
-
-
-                //////////////////////////////////
                 set.setColor(color);
                 set.setCircleColor(color);
                 set.setCircleHoleColor(color);
                 set.setLineWidth(0f);
-                //set.setLineWidth(lineWidth);
                 set.setCircleRadius(circleRadius);
-
-                //if(enable)set.enableDashedLine(lineLength, spaceLengthm, 0);
 
                 break;
             case "LowerUpper" :
