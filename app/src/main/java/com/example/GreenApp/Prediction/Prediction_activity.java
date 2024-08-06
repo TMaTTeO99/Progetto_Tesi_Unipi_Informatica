@@ -1048,7 +1048,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             //imposto la leggenda
             setLegend(newGraph);
 
-            setUpper.setDrawFilled(true);
+            if(prediction != null)setUpper.setDrawFilled(true);
 
             hideLoading();
             enableGraphView();
@@ -1056,9 +1056,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         catch (Exception e) {
 
             hideLoading();
-
-            ShowAlert("ERROR", "Impossibile Verificare Date", false, activity, null, null);
             e.printStackTrace();
+            ShowAlert("ERROR", "Impossibile Verificare Date", false, activity, null, null);
+
         }
 
     }
