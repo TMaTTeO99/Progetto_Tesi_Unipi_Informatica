@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-@Entity(primaryKeys = {"data", "fieldName"})
+@Entity(primaryKeys = {"data", "fieldName", "idChannel"})
 public class Mean {
 
     @NonNull

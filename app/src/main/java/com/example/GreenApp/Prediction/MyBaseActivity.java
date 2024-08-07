@@ -819,7 +819,7 @@ public class MyBaseActivity extends AppCompatActivity {
         return valueTime;
     }
 
-    protected ILineDataSet buildDataSeriesPrediction(ArrayList<Double> data, String lastTrack, String endDataSelected, String name, int color, boolean enableT) throws ParseException {
+    protected ILineDataSet buildDataSeriesPrediction(ArrayList<Double> data, float lastTrackIdx, String endDataSelected, String name, int color, boolean enableT) throws ParseException {
 
         ArrayList<Entry> values = new ArrayList<>();
 
@@ -828,14 +828,13 @@ public class MyBaseActivity extends AppCompatActivity {
         long timePrediction = 0;
         try {
             timePrediction = getReferceTime(endDataSelected);
-            timeLasttrack = getReferceTime(lastTrack);
         }
         catch (ParseException e){e.printStackTrace();}
 
 
         double x0 = data.get(0);
         double x1 = data.get(1);
-        values.add(new BarEntry(timeLasttrack,  (float) x0 ));
+        values.add(new BarEntry(lastTrackIdx,  (float) x0 ));
         values.add(new BarEntry(timePrediction,  (float) x1 ));
 
 
@@ -1200,7 +1199,7 @@ public class MyBaseActivity extends AppCompatActivity {
         return new Object[] {my_varhat, pred, q};
     }
     protected void makeNewPoint(double temperature, double irradiance, LineData allListData,
-                                LineChart newGraph, double lastTracking, Context activity, LineDataSet setPrediction) throws ParseException{
+                                LineChart newGraph, double lastTracking, Context activity, LineDataSet setPrediction, float idxLatTrack) throws ParseException{
 
         DataSavedToPredict data = DataSavedToPredict.getInstance();
 
@@ -1220,7 +1219,7 @@ public class MyBaseActivity extends AppCompatActivity {
             allListData.removeDataSet(lastNewDataSet);
         }
 
-        lastNewDataSet = (LineDataSet)buildDataSeriesPrediction(newPrediction, yesterday, endDataSelected, "Prediction", Color.GREEN, true);
+        lastNewDataSet = (LineDataSet)buildDataSeriesPrediction(newPrediction, idxLatTrack, endDataSelected, "Prediction", Color.GREEN, true);
 
 
         lastNewDataSet.setFillFormatter(new MyFillFormatter(setPrediction));

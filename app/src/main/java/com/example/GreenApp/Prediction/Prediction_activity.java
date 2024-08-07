@@ -150,7 +150,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     private String ID_1 = null;
     private String ID_2 = null;
 
-
+    private float idxLatTrackingPrediction = 0;
 
 
     /**
@@ -227,7 +227,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             minI = state.getMinI();
             minT = state.getMinT();
             selectedTemperature = state.getSelectedTemperature();
+
             setPrediction = state.getSetPrediction();
+            idxLatTrackingPrediction = state.getIdxLatTrackingPrediction();
 
 
 
@@ -242,7 +244,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             servideRetreive = state.getServideRetreive();
 
 
-            setPrediction = state.getSetPrediction();
 
 
             myDataStructDataReal = state.getMyDataStructDataReal();
@@ -401,7 +402,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                                                                 public void run() {
 
                                                                     try {
-                                                                        makeNewPoint(selectedTemperature, selectedIrradiance, allListData, newGraph, lastTraking, activity, setPrediction);
+                                                                        makeNewPoint(selectedTemperature, selectedIrradiance, allListData, newGraph, lastTraking, activity, setPrediction, idxLatTrackingPrediction);
                                                                     }
                                                                     catch (Exception e) {
                                                                         ShowAlert("Errore", e.getMessage(), true, activity, null, null);
@@ -479,9 +480,10 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         state.setFlagPredictionDone(flagPredictionDone);
 
 
+        state.setIdxLatTrackingPrediction(idxLatTrackingPrediction);
+
 
         state.setListForChoice(listForChoice);
-
         state.setLastTraking(lastTraking);
         state.setMaxI(maxI);
         state.setMaxT(maxT);
@@ -500,7 +502,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         state.setServideRetreive(servideRetreive);
 
 
-        state.setSetPrediction(setPrediction);
 
         state.setMyDataStructDataReal(myDataStructDataReal);
         state.setMyDataStructName(myDataStructName);
@@ -555,7 +556,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         dataFromDbIrr = database.getDataFromBDIrradiance(ID_1, ID_2, "irradiance", changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
         dataFromDbChoice = database.getDataFromBDChoice(ID_1, ID_2, choice, changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
 
-        List<Mean> means = database.getAllMean();
+
+
 
         //se non ho dati
         if(dataFromDbChoice == null || dataFromDbChoice.isEmpty()){
@@ -564,10 +566,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             retreiveData(startDateSelected , endDataSelected, ID_1, ID_2);
         }
         else {
+
+
             //se sono presenti dati controllo se in quell'arco temporale sono presenti i dati scelti dall'utente
-
-
-
             boolean startDataFlag = dataFromDbChoice.contains(new Mean(changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd")));
             boolean endDataFLag = dataFromDbChoice.contains(new Mean(changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd")));
 
@@ -894,11 +895,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 upper = upp;
                 lower = low;
 
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                LocalDate localNow = LocalDate.parse(yesterday, formatter);
-                LocalDate localEndDataSelected = LocalDate.parse(endDataSelected, formatter);
-
                 ArrayList<Double> obs = new ArrayList<>();
                 int firstObs = dateData.indexOf(startDateSelected);
                 int lastObs = dateData.indexOf(endDataSelected);
@@ -915,7 +911,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
                 //ArrayList<Double> traking = null;
-                int diffDays = getDayAhead(localNow, localEndDataSelected);
+                int diffDays = getDayAhead(stringToLocalDate(yesterday), stringToLocalDate(endDataSelected));
 
                 //recupero l'istanza di salvataggio di stato
                 SavedStatePrediction state = SavedStatePrediction.getInstance();
@@ -982,6 +978,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
     private void buildGraph(ArrayList<Double> prediction, ArrayList<Double> traking, ArrayList<Double> obs, ArrayList<Double> lower, ArrayList<Double> upper){
 
+
+        SavedStatePrediction state = SavedStatePrediction.getInstance();
+
         newGraph = findViewById(R.id.Graph_NewType);
         allListData = new LineData();
         if(prediction != null){
@@ -998,24 +997,25 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             addFragments(allListData, fragments, "Tracking", Color.BLACK, true);
 
 
-            //////////////
-            /*
             ArrayList<Entry> listWithLastTrackX = fragments.get(fragments.size() - 1);
             Entry lastTrackEntry = listWithLastTrackX.get(listWithLastTrackX.size() - 1);
-            */
-            /////////////////////////
 
+            //recupero l'ultimo valore x dei dati di traking sul grafico
+            idxLatTrackingPrediction = lastTrackEntry.getX();
 
+            //lo salvo per il caso di landscape
+            state.setIdxLatTrackingPrediction(idxLatTrackingPrediction);
 
             fragments = buildDataSeriesMeasurement(obs, dateData.get(0));
             addFragments(allListData, fragments, "Observations", getColor(R.color.observationsColor), false);
 
             if(prediction != null){
 
-                setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, yesterday, endDataSelected, "Prediction", Color.BLUE, false);
+                setPrediction = (LineDataSet) buildDataSeriesPrediction(prediction, idxLatTrackingPrediction, endDataSelected, "Prediction", Color.BLUE, false);
                 setPrediction.setDrawCircles(false);
-                setLower = (LineDataSet) buildDataSeriesPrediction(lower, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
-                setUpper = (LineDataSet) buildDataSeriesPrediction(upper, dateData.get(traking.size()-1), endDataSelected, "Prediction", getColor(R.color.upperLower), false);
+
+                setLower = (LineDataSet) buildDataSeriesPrediction(lower, idxLatTrackingPrediction, endDataSelected, "Prediction", getColor(R.color.upperLower), false);
+                setUpper = (LineDataSet) buildDataSeriesPrediction(upper, idxLatTrackingPrediction, endDataSelected, "Prediction", getColor(R.color.upperLower), false);
 
                 setUpper.setFillFormatter(new MyFillFormatter(setLower));
                 newGraph.setRenderer(new MyLineLegendRenderer(newGraph, newGraph.getAnimator(), newGraph.getViewPortHandler()));
@@ -1035,7 +1035,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             xAxis.setValueFormatter(new DateValueFormatter());
             xAxis.setDrawLabels(false);
 
-            //newGraph.getLegend().setEnabled(false);
             newGraph.setMarker(new MyMarkerView(activity, R.layout.pointer_popup, allListData, newGraph));
             newGraph.invalidate();
 
@@ -1056,6 +1055,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
             if(prediction != null)setUpper.setDrawFilled(true);
 
+            newGraph.notifyDataSetChanged();
             hideLoading();
             enableGraphView();
         }

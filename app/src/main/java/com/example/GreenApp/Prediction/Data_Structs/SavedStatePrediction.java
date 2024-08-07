@@ -124,6 +124,8 @@ public class SavedStatePrediction {
     private ArrayList<Double> lower;
     private ArrayList<Double> upper;
 
+    private float idxLatTrackingPrediction;
+
     /////////////////////////////////////////
     private SavedStatePrediction(){}
 
@@ -620,5 +622,13 @@ public class SavedStatePrediction {
 
     public void setSetUpper(LineDataSet setUpper) {
         this.setUpper = setUpper;
+    }
+
+    public float getIdxLatTrackingPrediction() {
+        return idxLatTrackingPrediction;
+    }
+
+    public void setIdxLatTrackingPrediction(float idxLatTrackingPrediction) {
+        this.idxLatTrackingPrediction = idxLatTrackingPrediction;
     }
 }
