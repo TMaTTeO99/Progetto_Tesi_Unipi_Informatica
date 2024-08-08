@@ -550,12 +550,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         String choice = adapterPrevisione.getCheckedItems().get(0);
 
         //recuper i dati nell'intevallo di tempo selezionato
-
-
         dataFromDbTemp = database.getDataFromBDTemperature(ID_1, ID_2, "temperature", changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
         dataFromDbIrr = database.getDataFromBDIrradiance(ID_1, ID_2, "irradiance", changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
         dataFromDbChoice = database.getDataFromBDChoice(ID_1, ID_2, choice, changeFormatDate(startDateSelected, "dd/MM/yyyy", "yyyy-MM-dd"), changeFormatDate(endDataSelected, "dd/MM/yyyy", "yyyy-MM-dd"));
-
 
 
 
@@ -857,6 +854,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
         fieldMeans.put("Controllo", controllo);
         fieldMeans.put("Previsione", pred);
+        LocalDate d = null;
 
         switch (behaviour){
             case 0:
@@ -864,11 +862,14 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 break;
             case 1:
 
-                retreiveData(dateData.get(dateData.size() - 1) , endDataSelected, ID_1, ID_2);
+                d = stringToLocalDate(dateData.get(dateData.size() - 1));
+                retreiveData(LocalDateToString(d.plusDays(1)) , endDataSelected, ID_1, ID_2);
+
                 break;
             case 2:
 
-                retreiveData(startDateSelected, dateData.get(0), ID_1, ID_2);
+                d = stringToLocalDate(dateData.get(0));
+                retreiveData(startDateSelected, LocalDateToString(d.minusDays(1)), ID_1, ID_2);
                 break;
         }
 

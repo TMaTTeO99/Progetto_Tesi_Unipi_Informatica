@@ -943,6 +943,12 @@ public class MyBaseActivity extends AppCompatActivity {
         return LocalDate.parse(d, formatter);
 
     }
+    protected String LocalDateToString(LocalDate d) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return d.format(formatter);
+
+    }
     protected static String getCurrentTimezoneOffset() {
 
         TimeZone tz = TimeZone.getDefault();
