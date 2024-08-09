@@ -32,14 +32,7 @@ public class Training extends MyBaseActivity implements Runnable{
 
     private int daysAhead;
     private int timeMin = 5;
-    private String startDate;
     private String endData;
-
-    //todo da eliminare
-    private String tttt = null;
-    private List<String> listaControllo;
-    private List<String> listaPrevisione;
-    protected HashMap<String, ArrayList<DataContainer>> myDataStructDataReal;
     private TrainingCallBack listener;
     private Matrix matrixControll = null;
     private Matrix matrixPrevisione = null;
@@ -71,9 +64,6 @@ public class Training extends MyBaseActivity implements Runnable{
         int availableT = 3;
         int dAhead = retreiveDayAhead(endData);
 
-        boolean init = true;//variabile flag per capire se devo ancora recuperare i dati per init
-
-
         Matrix support = new Matrix(1, 3);
         support.set(0, 0, 1);
         support.set(0, 1, 3);
@@ -83,10 +73,6 @@ public class Training extends MyBaseActivity implements Runnable{
         ArrayList<Matrix> predictionUpper = new ArrayList<>();
         ArrayList<Matrix> predictionLower = new ArrayList<>();
         ArrayList<Double> track = new ArrayList<>();
-
-        /**
-         * Gestisco il caso in cui l'utente abbia inserito una data precedente a quella di ieri
-         */
 
 
         availableT = daysAhead;
@@ -236,18 +222,9 @@ public class Training extends MyBaseActivity implements Runnable{
 
     }
 
-    public void setAdapterControllo(List<String> adp) {
-        this.listaControllo = adp;
-    }
-    public void setAdapterPrevisione(List<String> adp) {
-        this.listaPrevisione = adp;
-    }
-    public void setMyDataStructDataReal(HashMap<String, ArrayList<DataContainer>> myDataStructDataReal){
-        this.myDataStructDataReal = myDataStructDataReal;
-    }
+
     public void setDaysAhead(int daysAhead) { this.daysAhead = daysAhead;}
     public void setTimeMin(int timeMin) {this.timeMin = timeMin;}
-    public void setStartDate (String d) {this.startDate = d;}
     public void setEndData(String d) {this.endData = d;}
     public void setMatrixControll(Matrix matrixControll){this.matrixControll = matrixControll;}
     public void setMatrixPrevisione(Matrix matrixPrevisione){this.matrixPrevisione = matrixPrevisione;}

@@ -1131,12 +1131,10 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     private int doTraining() {
 
 
-
         if(!endDataSelected.isEmpty() && !startDateSelected.isEmpty()) {
 
             Training objTraining = new Training((TrainingCallBack) activity);
             Thread t = new Thread(objTraining);
-
 
             //prima di avviare il thread setto i dati necessari all'algoritmo per lavorare
             int timeMin = 3, daysAhead = 1;
@@ -1145,7 +1143,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 //se timeMin non è presente => è stata selezionata una data precedente ai primi dati che ho
                 if((timeMin = dateData.indexOf(startDateSelected)) == -1){
-                    timeMin = 0; // =>metto timeMin a 0
+                    timeMin = 0; // => metto timeMin a 0
                 }
             }
 
@@ -1159,8 +1157,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 daysAhead = dateData.indexOf(yesterday);
                 if(daysAhead == -1)daysAhead = dateData.size() - 1;
             }
-            //else daysAhead -= 1; //devo sottrarre 1 perche devo predire un giorno che è
-            //presente fra i miei dati quindi mi fermo il giorno prima
 
             /*
              * Qui controllo se il range selezionato dall'utente contiene almeno
@@ -1184,7 +1180,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 objTraining.setDaysAhead(daysAhead);
                 objTraining.setTimeMin(timeMin);
-                objTraining.setStartDate(startDateSelected);
                 objTraining.setEndData(endDataSelected);
 
                 objTraining.setMatrixControll(fieldMeans.get("Controllo"));
@@ -1192,7 +1187,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                 objTraining.setMeasurementDate(dateData);
 
-                objTraining.setMyDataStructDataReal(myDataStructDataReal);
                 ShowLoading(activity, false);
                 t.start();
             }
