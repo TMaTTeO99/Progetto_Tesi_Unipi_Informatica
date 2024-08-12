@@ -10,8 +10,10 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -140,7 +142,22 @@ public class MyBaseActivity extends AppCompatActivity {
     };
 
 
+    /**
+     * Gestisco la grafica della toolbar
+     * @return
+     */
+    protected void toolbarGrafic(MenuItem item){
 
+        item.setCheckable(true);
+        item.setChecked(true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                item.setCheckable(false);
+
+            }
+        }, 120);
+    }
 
 
 

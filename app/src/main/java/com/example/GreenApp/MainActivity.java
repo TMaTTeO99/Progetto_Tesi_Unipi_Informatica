@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,7 @@ import com.example.GreenApp.Prediction.Prediction_activity;
 import com.example.GreenApp.Prediction.Utils.SelectionAdapter;
 import com.example.firstapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONObject;
 
@@ -166,6 +168,9 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
     //TODO: di test
 
 
+    //variabile usata per aggiornare grafica di refresh
+    private static MenuItem itemRefresh = null;
+
 
     private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
@@ -259,36 +264,59 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             ContextCompat.startForegroundService(cont,intentservices);*/
         }
 
-        ToolBar_buttons.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        ToolBar_buttons.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
                 switch (item.getItemId()) {
-
-                    case  R.id.settings:
+                    case R.id.settings:
                         settingChannel();
-                        return true;
-                    case R.id.graphic :
-
+                        toolbarGrafic(item);
+                        break;
+                    case R.id.graphic:
                         doAdd();
-                        return true;
+                        toolbarGrafic(item);
+                        break;
                     case R.id.allarm:
                         notifiche();
-                        return true;
+                        toolbarGrafic(item);
+                        break;
                     case R.id.refresh:
+
+                        itemRefresh = item;
+                        item.setCheckable(true);
+                        item.setChecked(true);
                         refresh();
-                        return true;
+
+                        //dopo l'utilizzo di itemRefresh lo setto a null in modo
+                        //che poi quando aggionro la grafica in mytimertask
+                        //di itemRefresh, itemRefresh == null => non viene aggionrata
+                        //grafica del tasto se non toccato ma avviato solo mytimertask
+                        itemRefresh = null;
+                        
+                        break;
                 }
+
                 return false;
-
             }
+
         });
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        restartTimer(cont);
 
+    }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try{
+            future.cancel(true); }
+        catch (Exception e) { e.printStackTrace(); }
 
     }
 
@@ -849,7 +877,7 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
 
         Runnable timerTask = new MyTimerTask(channelID, READ_KEY, channelID_2, READ_KEY_2, url, url_2,
                 textTemp, textUmidity, textPh, textConducibilita, textIrradianza, textSoil, textPeso,
-                textStato, testo1, cont, database, image, textPesoPianta, textVento);
+                textStato, testo1, cont, database, image, textPesoPianta, textVento, itemRefresh);
         try{
            future.cancel(true); }
         catch (Exception e) { e.printStackTrace(); }

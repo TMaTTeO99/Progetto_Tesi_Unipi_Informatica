@@ -241,6 +241,10 @@
         android:elevation="2dp"
         app:backgroundTint="@color/colorPrimary"
         app:itemIconSize="25dp"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.ActiveItemTextAppearance"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveItemTextAppearance"
+
+        app:itemTextAppearanceActiveBoldEnabled="false"
         app:itemIconTint="@color/selected_color_toolbar"
         app:itemTextColor="@color/selected_color_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"

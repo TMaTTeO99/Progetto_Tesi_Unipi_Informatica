@@ -3,6 +3,8 @@ package com.example.GreenApp;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,6 +75,8 @@ public class MyTimerTask extends TimerTask {
     TextView textVento;
     ImageView image;
 
+    MenuItem itemRefresh;
+
     String url;
     String url_2; //variabile aggiunta da Matteo Torchia 599899
     Context context;
@@ -115,7 +119,7 @@ public class MyTimerTask extends TimerTask {
      */
     public MyTimerTask(String id, String key, String ID2, String keyread2, String url, String url_2, TextView textTemp1,TextView textUmidity1, TextView textPh1, TextView textConducibilita1,
                        TextView textIrradianza1,TextView textSoil, TextView textPO1,TextView stato,TextView testo1, Context cont,AppDatabase database,ImageView imm,
-                       TextView textPesoPianta, TextView textVento) {
+                       TextView textPesoPianta, TextView textVento, MenuItem itemRefresh) {
         textTemp=textTemp1;
         textUmidity=textUmidity1;
         textPh=textPh1;
@@ -133,7 +137,7 @@ public class MyTimerTask extends TimerTask {
         image=imm;
         this.textPesoPianta = textPesoPianta;
         this.textVento = textVento;
-
+        this.itemRefresh = itemRefresh;
 
         this.channelID_2 = ID2;
         this.url_2 = url_2;
@@ -455,7 +459,6 @@ public class MyTimerTask extends TimerTask {
 
 
                                             try{
-                                                System.out.println("evt mia: " + evapotraspirazione + flag_irrigation + " " +  flag_drainage);
                                                 if (evapotraspirazione != null){
                                                     if (v.getImagepeso() != null) {
                                                         textevap.setText(df.format(Math.round(Double.parseDouble(String.format(evapotraspirazione)) * 100.0) / 100.0));
@@ -638,8 +641,23 @@ public class MyTimerTask extends TimerTask {
         String toSet = giorno == 0 ? "Nessun aggiornamento" : "Ultimo aggiornamento: " + giorni1 + " giorni " + ore1 + " ore " + minuti1 + " minuti " + secondi1+ " secondi ";
         text1.setText(toSet);
 
-    }
+        //itemRefresh == null quando viene fatto il refresh automatico
+        //altrimenti è stato toccato dall'utente => aggiorno colore del tasto
+        if(itemRefresh != null)toolbarGraficRefresh(itemRefresh);
 
+    }
+    protected void toolbarGraficRefresh(MenuItem item){
+
+        item.setCheckable(true);
+        item.setChecked(true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                item.setCheckable(false);
+
+            }
+        }, 120);
+    }
 
 
     private String setDataFieldCorrect(ArrayList<String> fields, JSONObject valori, ArrayList<String> fieldsKey, String field, int ImgPosition) throws Exception{

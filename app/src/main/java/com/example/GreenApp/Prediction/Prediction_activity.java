@@ -350,8 +350,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
                         }
                         else ShowAlert("Errore", "Necessario Selezionare Data Inizio E Fine", false, activity, null, null);
-
-                        return true;
+                        toolbarGrafic(item);
+                        break;
 
                     case R.id.navigation_controllerPrediction :
                         activity.runOnUiThread(new Runnable() {
@@ -431,14 +431,17 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                                     ShowAlert("", "Necessario Effettuare Predizione", true, activity, null, null);
                                 }
                             }
-                        });
 
-                        return true;
+
+                        });
+                        toolbarGrafic(item);
+                        break;
                     case R.id.navigation_date:
 
                         gridController.setVisibility(View.GONE);
                         ShowDateSelectable("Data", "Selezionare Data Inizio e Fine", false, activity, (x) -> checkController(), 0, null);
-                        return true;
+                        toolbarGrafic(item);
+                        break;
                 }
                 return false;
 
