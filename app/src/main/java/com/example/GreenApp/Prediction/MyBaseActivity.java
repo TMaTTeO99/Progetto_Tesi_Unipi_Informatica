@@ -58,6 +58,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import java.text.ParseException;
@@ -398,11 +399,11 @@ public class MyBaseActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog,int id) {
                                 if(adapter.getCheckedItems().size() <= 0){
 
-                                    if(function_std_neagtive != null){
+                                    /*if(function_std_neagtive != null){
                                         function_std_neagtive.apply(d_negative);
-                                    }
+                                    }*/
                                     dialog.cancel();
-                                    ShowAlert("Errore", "Necessario Selezionare Previsione", false , activity, null, null);
+                                    ShowAlert("Errore", "Necessario Selezionare Previsione", false , activity, function_std_neagtive, null);
                                 }
                                 else {
                                     dialog.cancel();
@@ -1406,6 +1407,16 @@ public class MyBaseActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Resetto la grafica della toolbar quando si torna
+     * all'activity main
+     */
+    protected void resetToolBarButton(BottomNavigationView ToolBar_buttons){
+        int size = ToolBar_buttons.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            ToolBar_buttons.getMenu().getItem(i).setCheckable(false);
+        }
+    }
 
     /**
      * Inizializzo l'hashmap da usare per capire se recuperare i

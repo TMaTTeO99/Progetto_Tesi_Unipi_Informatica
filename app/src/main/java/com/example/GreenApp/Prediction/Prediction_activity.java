@@ -464,10 +464,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         //che se viene toccato un tasto e poi si passa in landscape
         //non rimanga il focus sui tasti
 
-        int size = ToolBar_buttons.getMenu().size();
-        for (int i = 0; i < size; i++) {
-            ToolBar_buttons.getMenu().getItem(i).setCheckable(false);
-        }
+        resetToolBarButton(ToolBar_buttons);
+
 
         //aggiungo listener per tornare all'activity precedente quando viene cliccato il tasto indietro
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {

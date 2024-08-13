@@ -35,9 +35,9 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="- -"
-        app:layout_constraintEnd_toStartOf="@+id/imagePianta"
+        app:layout_constraintEnd_toEndOf="@+id/imagePh"
         app:layout_constraintHorizontal_bias="0.35"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imagePh"
         app:layout_constraintTop_toBottomOf="@+id/imagePh" />
 
     <TextView
@@ -74,9 +74,9 @@
         android:layout_marginTop="5dp"
         android:autoSizeTextType="uniform"
         android:text="- -"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/imageTemperature"
         app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imageTemperature"
         app:layout_constraintTop_toBottomOf="@id/imageTemperature" />
 
     <TextView

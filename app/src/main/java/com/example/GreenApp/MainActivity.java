@@ -174,6 +174,9 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
     //variabile usata per aggiornare grafica del tasto per i grafici
     private static MenuItem itemGraph = null;
 
+    //variabile flag per capire se devo resettare la vista della tool bar
+    private boolean flagBackNotGroundToolBar = false;
+
     private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     /**
@@ -273,34 +276,56 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.settings:
+
+                        item.setCheckable(true);
+                        item.setChecked(true);
                         settingChannel();
-                        toolbarGrafic(item, 120);
                         break;
                     case R.id.graphic:
 
-                        itemGraph = item;
-                        itemGraph.setCheckable(true);
-                        itemGraph.setChecked(true);
-                        doAdd();
+                        //controllo che sia selezionato un canale
+
+                        if(channeldefault.size() > 0){
+                            itemGraph = item;
+                            itemGraph.setCheckable(true);
+                            itemGraph.setChecked(true);
+                            doAdd();
+                        }
+                        else {
+                            Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
+                        }
+
 
                         break;
                     case R.id.allarm:
-                        notifiche();
-                        toolbarGrafic(item, 120);
+
+                        if(channeldefault.size() > 0){
+                            item.setCheckable(true);
+                            item.setChecked(true);
+                            notifiche();
+                        }
+                        else {
+                            Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.refresh:
+                        if(channeldefault.size() > 0){
 
-                        itemRefresh = item;
-                        itemRefresh.setCheckable(true);
-                        itemRefresh.setChecked(true);
-                        refresh();
+                            itemRefresh = item;
+                            itemRefresh.setCheckable(true);
+                            itemRefresh.setChecked(true);
+                            refresh();
 
-                        //dopo l'utilizzo di itemRefresh lo setto a null in modo
-                        //che poi quando aggionro la grafica in mytimertask
-                        //di itemRefresh, itemRefresh == null => non viene aggionrata
-                        //grafica del tasto se non toccato ma avviato solo mytimertask
-                        itemRefresh = null;
-                        
+                            //dopo l'utilizzo di itemRefresh lo setto a null in modo
+                            //che poi quando aggionro la grafica in mytimertask
+                            //di itemRefresh, itemRefresh == null => non viene aggionrata
+                            //grafica del tasto se non toccato ma avviato solo mytimertask
+                            itemRefresh = null;
+
+                        }
+                        else {
+                            Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
 
@@ -312,22 +337,33 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
         //che se viene toccato un tasto e poi si passa in landscape
         //non rimanga il focus sui tasti
 
-        int size = ToolBar_buttons.getMenu().size();
-        for (int i = 0; i < size; i++) {
-            ToolBar_buttons.getMenu().getItem(i).setCheckable(false);
-        }
+        resetToolBarButton(ToolBar_buttons);
+
 
 
 
     }
 
+    /**
+     * Quando ritorno in primo piano ricomincio l aggiornamento
+     */
     @Override
     protected void onResume() {
         super.onResume();
+
+        //se onResume viene chiamato non perche l app era in background resetto lo stile
+        if(flagBackNotGroundToolBar) resetToolBarButton(ToolBar_buttons);
+
+        //resetto la variabile flag
+        flagBackNotGroundToolBar = false;
         restartTimer(cont);
 
     }
 
+    /**
+     * quando l app va in background fermo l aggiornamento dei dati
+     * della main page
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -335,12 +371,13 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             future.cancel(true); }
         catch (Exception e) { e.printStackTrace(); }
 
+
     }
 
     /* run notifications in the background */
     @Override
     protected void onStop () {
-        super .onStop() ;
+        super.onStop() ;
         //startService( new Intent( this, ForegroundService. class )) ;
     }
 
@@ -400,18 +437,20 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
 
 
                 if (channeldefault.size() > 0) {
+                    flagBackNotGroundToolBar = true;
                     openPredictView(channeldefault.get(0).getId(), channeldefault.get(0).getLett_id_2());
                 }
-                else Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
-                toolbarGrafic(itemGraph, 120);
-
-
+                else {
+                    toolbarGrafic(itemGraph, 120);
+                    Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
+                }
+                //toolbarGrafic(itemGraph, 120);
 
                 break;
             default:
 
                 executingDoAdd();
-                toolbarGrafic(itemGraph, 120);
+                //toolbarGrafic(itemGraph, 120);
                 break;
         }
 
@@ -465,48 +504,6 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             selectedChannel.add(inUse);
             posField.add(8);
         }
-        /*if(inUse.getFiled1_2() != null){
-            list.add(inUse.getFiled1_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(9);
-        }
-        if(inUse.getFiled2_2() != null){
-            list.add(inUse.getFiled2_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(10);
-        }
-        if(inUse.getFiled3_2() != null){
-            list.add(inUse.getFiled3_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(11);
-        }
-        if(inUse.getFiled4_2() != null){
-            list.add(inUse.getFiled4_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(12);
-        }
-        if(inUse.getFiled5_2() != null){
-            list.add(inUse.getFiled5_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(13);
-        }
-        if(inUse.getFiled6_2() != null){
-            list.add(inUse.getFiled6_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(14);
-        }
-        if(inUse.getFiled7_2() != null){
-            list.add(inUse.getFiled7_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(15);
-        }
-        if(inUse.getFiled8_2() != null){
-            list.add(inUse.getFiled8_2().concat(" (id:").concat(inUse.getLett_id_2()).concat(")"));
-            selectedChannel.add(inUse);
-            posField.add(16);
-        }
-
-         */
     }
 
     /**
@@ -714,9 +711,14 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int which) {
                     //se non ho selezionato nessun grafico comunico un messaggio di errore
-                    if (name.size() == 0)
+                    if (name.size() == 0){
+                        toolbarGrafic(itemGraph, 120);
                         Toast.makeText(cont, "NESSUN GRAFICO SELEZIONATO!", Toast.LENGTH_SHORT).show();
+                    }
                     else {
+
+                        flagBackNotGroundToolBar = true; //fla che è stata avviata activity
+                        toolbarGrafic(itemGraph, 120);
                         Intent intent = com.example.GreenApp.Graphic.MainActivity.getActivityintent(MainActivity.this);
                         com.example.GreenApp.Graphic.MainActivity.setGrapView(name, selChan,selectedPos);
                         startActivity(intent);
@@ -728,6 +730,8 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             mBuilder.setNeutralButton("ANNULLA", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int which) {
+
+                    toolbarGrafic(itemGraph, 120);
                     //elimino tutte le selezioni
                     for (int i = 0; i < checkedItems.length; i++) {
                         checkedItems[i] = false;
@@ -781,6 +785,10 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
      *
      */
     public void settingChannel() {
+
+
+        flagBackNotGroundToolBar = true;
+
         //avvio la nuova activity channelactivity
         Intent intent = ChannelActivity.getActivityintent(MainActivity.this);
         startActivity(intent);
@@ -821,6 +829,7 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
           Toast.makeText(cont,"INSERISCI UN CHANNEL",Toast.LENGTH_SHORT).show();
         }
         else {
+            flagBackNotGroundToolBar = true;
             AlertActivity.setChannel(trovato);
             startActivity(intent);
         }
