@@ -654,7 +654,6 @@ public class MyTimerTask extends TimerTask {
             @Override
             public void run() {
                 item.setCheckable(false);
-
             }
         }, 120);
     }

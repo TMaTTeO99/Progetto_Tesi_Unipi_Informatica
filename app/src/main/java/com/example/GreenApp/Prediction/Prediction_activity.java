@@ -152,7 +152,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
     private float idxLatTrackingPrediction = 0;
 
-
+    private MenuItem itemData = null;
     /**
      * Utilizzo variabili globali per recuperare il valore massimo e il valore minimo
      * delle seekbar
@@ -167,6 +167,10 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     private boolean flagPredictionDone = false; //flag per essere sicuro di aver previsto un dato del futuro
     //quando uso il controller
     private boolean flagControllerActive = false;//flag per controllare
+
+    //variabile usata per aggiornare grafica del tasto per i grafici
+    private static MenuItem itemGraph = null;
+    private static MenuItem itemController = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -337,6 +341,9 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 switch (item.getItemId()) {
 
                     case  R.id.navigation_prediction:
+                        itemGraph = item;
+                        itemGraph.setCheckable(true);
+                        itemGraph.setChecked(true);
 
                         if(!startDateSelected.isEmpty() && !endDataSelected.isEmpty()){
 
@@ -345,15 +352,19 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
                             ShowCheckList("Previsone", "", false, activity, adapterPrevisione,
-                                    (x) -> retreiveFieldNameFromServer(flag), -1, TypeGerericFunction.IntegerType, "Predict", "Close");
+                                    (x) -> retreiveFieldNameFromServer(flag), -1, TypeGerericFunction.IntegerType, "Predict", "Close", (x) -> doNeagtiveFunctionGraph(), null);
 
 
                         }
-                        else ShowAlert("Errore", "Necessario Selezionare Data Inizio E Fine", false, activity, null, null);
-                        toolbarGrafic(item);
+                        else ShowAlert("Errore", "Necessario Selezionare Data Inizio E Fine", false, activity, (x) -> doNeagtiveFunctionGraph(), null);
+
                         break;
 
                     case R.id.navigation_controllerPrediction :
+                        itemController = item;
+                        itemController.setCheckable(true);
+                        itemController.setChecked(true);
+
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -393,6 +404,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
 
+                                                    if(itemController != null) toolbarGrafic(itemController, 120);
                                                     gridController.setVisibility(View.VISIBLE);
                                                     ButtonControlledPrediction.setOnClickListener(new View.OnClickListener() {
                                                         @Override
@@ -416,31 +428,31 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                                                 else gridController.setVisibility(View.GONE);
                                             }
                                             else {
-                                                ShowAlert("", "Necessario Selezionare Data Finale Superiore A: " + yesterday , true, activity, null, null);
+                                                ShowAlert("", "Necessario Selezionare Data Finale Superiore A: " + yesterday , true, activity, (x) -> doNeagtiveFunctionController(), null);
                                             }
                                         }
                                         else {
-                                            ShowAlert("", "Necessario Selezionare Data Inizio E Fine", true, activity, null, null);
+                                            ShowAlert("", "Necessario Selezionare Data Inizio E Fine", true, activity, (x) -> doNeagtiveFunctionController(), null);
                                         }
                                     }
                                     else {
-                                        ShowAlert("", "Necessario Prevedere Dato Futuro", true, activity, null, null);
+                                        ShowAlert("", "Necessario Prevedere Dato Futuro", true, activity, (x) -> doNeagtiveFunctionController(), null);
                                     }
                                 }
                                 else {
-                                    ShowAlert("", "Necessario Effettuare Predizione", true, activity, null, null);
+                                    ShowAlert("", "Necessario Effettuare Predizione", true, activity, (x) -> doNeagtiveFunctionController(), null);
                                 }
                             }
-
-
                         });
-                        toolbarGrafic(item);
                         break;
                     case R.id.navigation_date:
 
                         gridController.setVisibility(View.GONE);
+                        itemData = item;
+                        itemData.setCheckable(true);
+                        itemData.setChecked(true);
                         ShowDateSelectable("Data", "Selezionare Data Inizio e Fine", false, activity, (x) -> checkController(), 0, null);
-                        toolbarGrafic(item);
+
                         break;
                 }
                 return false;
@@ -519,6 +531,18 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
         state.setSaved(true);
 
+    }
+    /**
+     * Aggiunta da Matteo Torchia 599899
+     * Funzione da eseguire quando utente seleziona close nel pop-up dei grafici
+     */
+    private int doNeagtiveFunctionGraph(){
+        if(itemGraph != null) toolbarGrafic(itemGraph, 120);
+        return 0;
+    }
+    private int doNeagtiveFunctionController(){
+        if(itemController != null) toolbarGrafic(itemController, 120);
+        return 0;
     }
 
 
@@ -655,6 +679,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 gridController.setVisibility(View.GONE);
             }
         }
+        if(itemData != null) toolbarGrafic(itemData, 120);
         return 0;
     }
 
@@ -738,7 +763,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
             url_2 = "https://api.thingspeak.com/channels/" + ID_2 +"/feeds.json?results=0";;
             dorequest(ID_2, url_2, flag);
         }
-
 
         return 0;
     }
@@ -1065,9 +1089,11 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
         }
         catch (Exception e) {
 
+            disableGraphView();
+
             hideLoading();
             e.printStackTrace();
-            ShowAlert("ERROR", "Impossibile Verificare Date", false, activity, null, null);
+            ShowAlert("ERRORE", "Impossibile Costruire Grafico", false, activity, null, null);
 
         }
 
@@ -1270,6 +1296,8 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 //GridViewExplanation.setVisibility(View.GONE);
                 startDateView.setVisibility(View.GONE);
                 endDateView.setVisibility(View.GONE);
+                //resetto la grafica del testo prediction
+                doNeagtiveFunctionGraph();
             }
         });
 
@@ -1288,8 +1316,12 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 //GridViewExplanation.setVisibility(View.VISIBLE);
                 startDateView.setVisibility(View.VISIBLE);
                 endDateView.setVisibility(View.VISIBLE);
+
+                //resetto la grafica del testo prediction
+                doNeagtiveFunctionGraph();
             }
         });
+
     }
     private int runProcessData() {
 

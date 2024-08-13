@@ -146,7 +146,7 @@ public class MyBaseActivity extends AppCompatActivity {
      * Gestisco la grafica della toolbar
      * @return
      */
-    protected void toolbarGrafic(MenuItem item){
+    protected void toolbarGrafic(MenuItem item, int time){
 
         item.setCheckable(true);
         item.setChecked(true);
@@ -156,7 +156,7 @@ public class MyBaseActivity extends AppCompatActivity {
                 item.setCheckable(false);
 
             }
-        }, 120);
+        }, time);
     }
 
 
@@ -363,7 +363,7 @@ public class MyBaseActivity extends AppCompatActivity {
      */
     protected <T,RR> void ShowCheckList(String title, String mex, boolean cancelable, Activity activity,
                                         AdapterInterfaceCheck adapter, Function<T, RR> function_std, T d, TypeGerericFunction type
-                                        , String positiveText, String neagtiveText){
+                                        , String positiveText, String neagtiveText, Function<T, RR> function_std_neagtive, T d_negative){
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -388,12 +388,19 @@ public class MyBaseActivity extends AppCompatActivity {
                         .setNegativeButton(neagtiveText, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                if(function_std_neagtive != null){
+                                    function_std_neagtive.apply(d_negative);
+                                }
                                 dialog.cancel();
                             }
                         })
                         .setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 if(adapter.getCheckedItems().size() <= 0){
+
+                                    if(function_std_neagtive != null){
+                                        function_std_neagtive.apply(d_negative);
+                                    }
                                     dialog.cancel();
                                     ShowAlert("Errore", "Necessario Selezionare Previsione", false , activity, null, null);
                                 }

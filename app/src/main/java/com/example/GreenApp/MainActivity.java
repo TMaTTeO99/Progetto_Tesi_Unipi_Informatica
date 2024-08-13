@@ -171,6 +171,8 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
     //variabile usata per aggiornare grafica di refresh
     private static MenuItem itemRefresh = null;
 
+    //variabile usata per aggiornare grafica del tasto per i grafici
+    private static MenuItem itemGraph = null;
 
     private static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
@@ -272,21 +274,25 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
                 switch (item.getItemId()) {
                     case R.id.settings:
                         settingChannel();
-                        toolbarGrafic(item);
+                        toolbarGrafic(item, 120);
                         break;
                     case R.id.graphic:
+
+                        itemGraph = item;
+                        itemGraph.setCheckable(true);
+                        itemGraph.setChecked(true);
                         doAdd();
-                        toolbarGrafic(item);
+
                         break;
                     case R.id.allarm:
                         notifiche();
-                        toolbarGrafic(item);
+                        toolbarGrafic(item, 120);
                         break;
                     case R.id.refresh:
 
                         itemRefresh = item;
-                        item.setCheckable(true);
-                        item.setChecked(true);
+                        itemRefresh.setCheckable(true);
+                        itemRefresh.setChecked(true);
                         refresh();
 
                         //dopo l'utilizzo di itemRefresh lo setto a null in modo
@@ -300,8 +306,11 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
 
                 return false;
             }
-
         });
+
+        ToolBar_buttons.getMenu().
+
+
     }
 
     @Override
@@ -381,14 +390,20 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
         switch (choice.get(0)) {
             case "Previsione":
 
+
                 if (channeldefault.size() > 0) {
                     openPredictView(channeldefault.get(0).getId(), channeldefault.get(0).getLett_id_2());
                 }
                 else Toast.makeText(cont, "INSERISCI UN CHANNEL!", Toast.LENGTH_SHORT).show();
+                toolbarGrafic(itemGraph, 120);
+
+
 
                 break;
             default:
+
                 executingDoAdd();
+                toolbarGrafic(itemGraph, 120);
                 break;
         }
 
@@ -738,9 +753,20 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
         adapterForChoice = new SingleAdapter(listForChoiceMennu, this);//buildActivitySelectAdapter((SelectionAdapter) this);
 
         ShowCheckList("Attività Da Svolgere", "Selezionare Una Sola Opzione", true, this, adapterForChoice,
-                (x) -> activitySelect(), null, TypeGerericFunction.ViewType, "Confirm", "Close");
+                (x) -> activitySelect(), null, TypeGerericFunction.ViewType, "Confirm", "Close", (y) -> doNeagtiveFunction(), null);
 
     }
+
+    /**
+     * Aggiunta da Matteo Torchia 599899
+     * Funzione da eseguire quando utente seleziona close nel pop-up dei grafici
+     */
+    private int doNeagtiveFunction(){
+        toolbarGrafic(itemGraph, 120);
+        return 0;
+    }
+
+
 
     /**
      * azione che devo eseguire quando premo il pulsante impostazioni
