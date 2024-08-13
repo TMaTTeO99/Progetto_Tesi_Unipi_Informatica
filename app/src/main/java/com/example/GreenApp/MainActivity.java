@@ -308,14 +308,22 @@ public class MainActivity extends MyBaseActivity implements SelectionAdapter {
             }
         });
 
-        ToolBar_buttons.getMenu().
+        //all' avvio dell activity resetto i tasti della toolbar in modo
+        //che se viene toccato un tasto e poi si passa in landscape
+        //non rimanga il focus sui tasti
+
+        int size = ToolBar_buttons.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            ToolBar_buttons.getMenu().getItem(i).setCheckable(false);
+        }
+
 
 
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         restartTimer(cont);
 
     }
