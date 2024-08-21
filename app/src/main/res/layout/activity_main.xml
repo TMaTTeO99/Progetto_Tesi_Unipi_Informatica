@@ -31,12 +31,13 @@
         android:id="@+id/textPh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="2dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="- -"
         app:layout_constraintEnd_toEndOf="@+id/imagePh"
-        app:layout_constraintHorizontal_bias="0.35"
+
         app:layout_constraintStart_toStartOf="@+id/imagePh"
         app:layout_constraintTop_toBottomOf="@+id/imagePh" />
 
@@ -58,11 +59,11 @@
         android:id="@+id/textConducibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="2dp"
         android:autoSizeTextType="uniform"
         android:text="- -"
         app:layout_constraintEnd_toEndOf="@+id/imageConducibility"
-        app:layout_constraintHorizontal_bias="0.576"
+
         app:layout_constraintStart_toStartOf="@+id/imageConducibility"
         app:layout_constraintTop_toBottomOf="@+id/imageConducibility" />
 
@@ -72,6 +73,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
         android:autoSizeTextType="uniform"
         android:text="- -"
         app:layout_constraintEnd_toEndOf="@id/imageTemperature"
@@ -154,6 +156,7 @@
 
     </TextView>
 
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -166,9 +169,7 @@
         android:text="ultimo aggiornamento :"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <ImageView
         android:id="@+id/imagePh"
@@ -290,7 +291,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="5dp"
         android:autoSizeTextType="uniform"
         android:text="- -"
         app:layout_constraintEnd_toEndOf="@+id/imageViewPeso"
@@ -475,10 +475,10 @@
         android:id="@+id/Textvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:text="- -"
         app:layout_constraintEnd_toEndOf="@+id/imageWind"
-        app:layout_constraintHorizontal_bias="0.807"
+        android:layout_marginLeft="5dp"
         app:layout_constraintStart_toStartOf="@+id/imageWind"
         app:layout_constraintTop_toBottomOf="@+id/imageWind" />
 

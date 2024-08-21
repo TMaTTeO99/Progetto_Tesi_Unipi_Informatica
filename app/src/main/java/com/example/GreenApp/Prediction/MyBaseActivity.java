@@ -96,7 +96,6 @@ public class MyBaseActivity extends AppCompatActivity {
      * a disposizione oggi "20/09/2022" <-- ultimmo giorno in cui ho dati
      */
 
-    //TODO: da modificare alla fine settando la data di ieri reale
 
     protected String now = "21/09/2022";
 
@@ -399,9 +398,6 @@ public class MyBaseActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog,int id) {
                                 if(adapter.getCheckedItems().size() <= 0){
 
-                                    /*if(function_std_neagtive != null){
-                                        function_std_neagtive.apply(d_negative);
-                                    }*/
                                     dialog.cancel();
                                     ShowAlert("Errore", "Necessario Selezionare Previsione", false , activity, function_std_neagtive, null);
                                 }
@@ -451,8 +447,6 @@ public class MyBaseActivity extends AppCompatActivity {
 
             //controllo se il dato successivo sia distante da quello precedente
             //da piu di un giorno, in tal caso ho un buco
-
-
             if(getDayAhead(stringToLocalDate(changeFormatDate(dataFromChoice.get(i).getData(), "yyyy-MM-dd", "dd/MM/yyyy")), stringToLocalDate(changeFormatDate(dataFromChoice.get(i+1).getData(), "yyyy-MM-dd", "dd/MM/yyyy"))) > 1){
                 return false;
             }
