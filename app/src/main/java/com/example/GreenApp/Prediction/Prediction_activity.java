@@ -72,6 +72,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import Jama.Matrix;
 
@@ -171,6 +173,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
     //variabile usata per aggiornare grafica del tasto per i grafici
     private static MenuItem itemGraph = null;
     private static MenuItem itemController = null;
+    private Lock  lockDoRequest = new ReentrantLock();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,10 +280,6 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
 
 
         }
-
-
-
-
 
         layoutPrevisione = findViewById(R.id.linearLayoutPrevisione);
         startDateView = findViewById(R.id.startDateIdPreditction);
@@ -781,6 +780,7 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                 new Response.Listener<JSONObject>() {
                     @Override
                     public synchronized void onResponse(JSONObject response) {
+                        lockDoRequest.lock();
                         try {
 
                             //recupero i nomi dei field in un array
@@ -814,8 +814,12 @@ public class Prediction_activity extends MyBaseActivity implements MyHttpCallBac
                                 }
                             }
 
-                        } catch (JSONException e) {
+                        }
+                        catch (JSONException e) {
                             e.printStackTrace();
+                        }
+                        finally {
+                            lockDoRequest.unlock();
                         }
                     }
                 }, new Response.ErrorListener() {

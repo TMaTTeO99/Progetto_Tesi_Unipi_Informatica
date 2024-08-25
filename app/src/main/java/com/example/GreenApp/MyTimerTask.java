@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /*
  * Progetto: svilluppo App Android per Tirocinio interno
@@ -97,7 +99,7 @@ public class MyTimerTask extends TimerTask {
     private static String READ_KEY_2 = null;
 
     private ChannelFieldsSelected checkFlags = new ChannelFieldsSelected();
-
+    private Lock lockJsonResponse = new ReentrantLock();
 
     /**
      * funzione costruttore
@@ -217,8 +219,8 @@ public class MyTimerTask extends TimerTask {
                             new Response.Listener<JSONObject>() {
 
                                 @Override
-                                public synchronized void onResponse(JSONObject response) {
-
+                                public void onResponse(JSONObject response) {
+                                    lockJsonResponse.lock();
                                     if(v == null){
 
                                         if(flag.get(0)) {
@@ -521,10 +523,12 @@ public class MyTimerTask extends TimerTask {
 
                                     } catch (JSONException e) {
 
-
                                         e.printStackTrace();
                                         stato.setText("OFFLINE");
                                         stato.setTextColor(Color.RED);
+                                    }
+                                    finally {
+                                        lockJsonResponse.unlock();
                                     }
                                 }
                             }, new Response.ErrorListener() {

@@ -37,10 +37,6 @@ public class RetreiveData extends MyBaseActivity {
                           Prediction_activity context) {
 
 
-
-
-
-
         final JsonObjectRequest jsonObjectRequest;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
