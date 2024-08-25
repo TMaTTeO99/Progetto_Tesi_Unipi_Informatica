@@ -38,8 +38,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
 
 /*
@@ -113,8 +111,6 @@ public class AlertActivity extends AppCompatActivity {
     private ChannelFieldsSelected checkFlags = new ChannelFieldsSelected();
 
     //lock utilizzata per la sezione critica riguardo il recupero dell'timestamp
-    private Lock lockTimeStamp = new ReentrantLock();
-    private Lock lockJsonResponse =  new ReentrantLock();
     /**
      * metodo eseguito alla creazione
      */
@@ -166,7 +162,7 @@ public class AlertActivity extends AppCompatActivity {
         ventomax = findViewById(R.id.ventomax);
 
 
-        //creo l'associazione con il database 
+        //creo l'associazione con il database
         database = AppDatabase.getDataBase(getApplicationContext());
 
 
@@ -392,9 +388,8 @@ public class AlertActivity extends AppCompatActivity {
                              * @param response: messaggio di rispetto
                              */
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public synchronized void onResponse(JSONObject response) {
 
-                                lockTimeStamp.lock();
                                 try {
 
                                     idxToCall[0]++;//incremento la variabile per capire a quale risposta mi trovo
@@ -445,9 +440,6 @@ public class AlertActivity extends AppCompatActivity {
                                 }
                                 catch (JSONException e) {
                                     e.printStackTrace();
-                                }
-                                finally {
-                                    lockTimeStamp.unlock();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -502,9 +494,8 @@ public class AlertActivity extends AppCompatActivity {
 
                     new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public synchronized void onResponse(JSONObject response) {
 
-                            lockJsonResponse.lock();
                             try {
                                 //recupero l'array feeds
                                 JSONArray jsonArray = response.getJSONArray("feeds");
@@ -775,9 +766,6 @@ public class AlertActivity extends AppCompatActivity {
                             }
                             catch (Exception e) {
                                 e.printStackTrace();
-                            }
-                            finally {
-                                lockJsonResponse.unlock();
                             }
                             Log.d("AlertActivity", "download eseguito correttamente");
                         }

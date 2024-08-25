@@ -47,8 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.TimerTask;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static com.example.GreenApp.Alert.App.CHANNEL_1_ID;
 
@@ -75,8 +73,7 @@ public class MyTimerTask extends TimerTask {
     private int minuti=0;
     private String ID_irrigation_drainage = null;
     private ChannelFieldsSelected checkFlags = new ChannelFieldsSelected();
-    private Lock lockJsonResponse = new ReentrantLock();
-    private Lock lockLastTime = new ReentrantLock();
+
     /**
      * metodo costruttore
      * @param chan: lista contenente tutti i channel
@@ -177,7 +174,6 @@ public class MyTimerTask extends TimerTask {
                             int minuti=0;
                             @Override
                             public void onResponse(JSONObject response) {
-                                lockLastTime.lock();
                                 try {
 
                                     idxToCall[0]++;//incremento la variabile per capire a quale risposta mi trovo
@@ -235,9 +231,6 @@ public class MyTimerTask extends TimerTask {
                                 catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                finally {
-                                    lockLastTime.unlock();
-                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -285,8 +278,8 @@ public class MyTimerTask extends TimerTask {
         final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlString, null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        lockJsonResponse.lock();
+                    public synchronized void onResponse(JSONObject response) {
+
                         try {
                             //recupero l'array feeds
                             JSONArray jsonArray = response.getJSONArray("feeds");
@@ -514,9 +507,6 @@ public class MyTimerTask extends TimerTask {
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
-                        }
-                        finally {
-                            lockJsonResponse.unlock();
                         }
 
                     }
